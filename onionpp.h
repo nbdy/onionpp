@@ -6,7 +6,7 @@
 #define ONIONPP__ONIONPP_H_
 
 #include <cstdint>
-#include <stddef.h>
+#include <cstddef>
 
 extern "C" {
 #ifdef _WIN32
