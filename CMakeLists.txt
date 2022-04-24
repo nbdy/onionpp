@@ -38,14 +38,19 @@ if(PYTHON)
     set(PYTHONLIBS_FOUND TRUE CACHE INTERNAL "")
     add_subdirectory(pybind11)
 
-    pybind11_add_module(onionpp MODULE python_binding.cpp)
-    target_link_libraries(onionpp PRIVATE ${TOR_LIBRARIES})
-    set_target_properties(onionpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
+    pybind11_add_module(onionppy MODULE python_binding.cpp)
+    target_link_libraries(onionppy PRIVATE ${TOR_LIBRARIES})
+    set_target_properties(onionppy PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
     # install(TARGETS onionpp COMPONENT python DESTINATION ${Python3_SITELIB} LIBRARY DESTINATION ${Python3_SITELIB})
 
-    add_dependencies(onionpp tor)
+    add_dependencies(onionppy tor)
 endif()
+
+# Static library
+add_library(onionpp onionpp.h)
+add_dependencies(onionpp tor)
+set_target_properties(onionpp PROPERTIES LINKER_LANGUAGE CXX)
 
 # Test executable
 add_executable(onionpp_test main.cpp onionpp.h)
