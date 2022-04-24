@@ -12,6 +12,10 @@ embed tor in your application
 - libzstd-dev
 - zlib1g-dev
 
+### windows
+
+TODO
+
 ## features
 
 - [X] start tor
@@ -42,6 +46,6 @@ int main() {
 
 ![onionpp_test](https://i.ibb.co/XXDgWyt/grafik.png)
 
-###
+### linux
 
 ![onionpp_test](https://i.ibb.co/t2LJxkB/grafik.png)
