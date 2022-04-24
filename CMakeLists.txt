@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.4)
 project(onionpp LANGUAGES CXX)
 
 option(PYTHON "Build python binding" OFF)
-option(WINDOWS "Build for windows" ON)
+option(WINDOWS "Build for windows" OFF)
 option(x86_64 "Build for x86_64" OFF)
 
 set(CMAKE_CXX_STANDARD 11)
