@@ -5,14 +5,14 @@
 #ifndef ONIONPP__ONIONPP_H_
 #define ONIONPP__ONIONPP_H_
 
-#include <cstring>
-#include <iostream>
-#include <string>
-#include <thread>
-#include <vector>
-#include <sstream>
+#include <cstdint>
+#include <stddef.h>
 
 extern "C" {
+#ifdef _WIN32
+typedef int SOCKET;
+#endif
+
 #include "feature/api/tor_api.h"
 
 void crypto_rand(char*, int32_t);
@@ -21,6 +21,18 @@ void secret_to_key_rfc2440(
     char *key_out, size_t key_out_len, const char *secret,
     size_t secret_len, const char *s2k_specifier);
 }
+
+#include <cstring>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <sstream>
+
+#ifdef _WIN32
+#include "mingw.thread.h"
+#else
+#include <thread>
+#endif
 
 namespace onionpp {
 

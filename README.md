@@ -12,10 +12,6 @@ embed tor in your application
 - libzstd-dev
 - zlib1g-dev
 
-### windows
-
-- cpp build tools (visual studio)
-
 ## features
 
 - [X] start tor
