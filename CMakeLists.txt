@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.4)
 project(onionpp LANGUAGES CXX)
 
-option(PYTHON "Build python binding" OFF)
 option(WINDOWS "Build for windows" OFF)
 option(x86_64 "Build for x86_64" OFF)
 
@@ -30,22 +29,6 @@ if(WINDOWS)
 endif()
 
 include(cmake/AddTor.cmake)
-
-# Python bindings
-if(PYTHON)
-    set(PYTHON_INCLUDE_DIRS ${WINDOWS_PYTHON_DIRECTORY} CACHE INTERNAL "Cross python include path")
-    set(PYTHON_MODULE_EXTENSION ".so" CACHE INTERNAL "Cross python lib extension")
-    set(PYTHONLIBS_FOUND TRUE CACHE INTERNAL "")
-    add_subdirectory(pybind11)
-
-    pybind11_add_module(onionppy MODULE python_binding.cpp)
-    target_link_libraries(onionppy PRIVATE ${TOR_LIBRARIES})
-    set_target_properties(onionppy PROPERTIES POSITION_INDEPENDENT_CODE ON)
-
-    # install(TARGETS onionpp COMPONENT python DESTINATION ${Python3_SITELIB} LIBRARY DESTINATION ${Python3_SITELIB})
-
-    add_dependencies(onionppy tor)
-endif()
 
 # Static library
 add_library(onionpp onionpp.h)
