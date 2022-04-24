@@ -15,12 +15,14 @@ ExternalProject_Add(openssl
         GIT_TAG OpenSSL_1_0_2j
         UPDATE_DISCONNECTED 1
         BUILD_IN_SOURCE 1
-        CONFIGURE_COMMAND export LDFLAGS="-static -static-libgcc -L/usr/x86_64-w64-mingw32/lib/" &&
+        CONFIGURE_COMMAND
+        export CFLAGS="-I${TOOLCHAIN_LIB_PATH}" &&
+        export LDFLAGS="-static -static-libgcc -L${TOOLCHAIN_LIB_PATH}" &&
         ./Configure ${CONFIGURE_PREFIX} no-shared no-asm
         --cross-compile-prefix=${TOOLCHAIN_PREFIX}
         --prefix=${OPENSSL_BINARY_DIR}
         -static -static-libgcc
-        BUILD_COMMAND make
+        BUILD_COMMAND make clean && make
         INSTALL_COMMAND make install
         )
 

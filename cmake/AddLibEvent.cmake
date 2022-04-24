@@ -8,8 +8,8 @@ ExternalProject_Add(libevent
         UPDATE_DISCONNECTED 1
         BUILD_IN_SOURCE 1
         CONFIGURE_COMMAND cd libevent-2.1.11-stable && ./autogen.sh && ./configure --disable-shared --enable-static --prefix=${LIBEVENT_BINARY_DIR} --host=${TOOLCHAIN}
-        BUILD_COMMAND cd libevent-2.1.11-stable && make -j$(nproc)
-        INSTALL_COMMAND cd libevent-2.1.11-stable && make install
+        BUILD_COMMAND cd libevent-2.1.11-stable && make clean && make -j$(nproc)
+        INSTALL_COMMAND cd libevent-2.1.11-stable && make clean && make install
         )
 
 add_dependencies(libevent openssl)

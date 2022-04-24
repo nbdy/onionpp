@@ -14,7 +14,7 @@ ExternalProject_Add(zlib
         UPDATE_DISCONNECTED 1
         BUILD_IN_SOURCE 1
         CONFIGURE_COMMAND ./configure --prefix=${ZLIB_BINARY_DIR} --static
-        BUILD_COMMAND make ${MAKE_ARGS} PREFIX=${TOOLCHAIN_PREFIX}
+        BUILD_COMMAND make clean && make ${MAKE_ARGS} PREFIX=${TOOLCHAIN_PREFIX}
         INSTALL_COMMAND make install
         )
 

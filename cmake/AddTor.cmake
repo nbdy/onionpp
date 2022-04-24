@@ -3,16 +3,6 @@ include(cmake/AddZLib.cmake)
 
 set(TOR_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/tor/bin/)
 
-if(WINDOWS)
-    if(x86_64)
-        set(TOOLCHAIN_LIB_PATH "/usr/x86_64-w64-mingw32/lib")
-    else()
-        set(TOOLCHAIN_LIB_PATH "/usr/i686-w64-mingw32/lib")
-    endif()
-else()
-    set(TOR_FLAGS "")
-endif()
-
 ExternalProject_Add(tor
         PREFIX tor
         GIT_REPOSITORY https://git.torproject.org/tor.git
@@ -25,6 +15,7 @@ ExternalProject_Add(tor
         --disable-manpage
         --disable-html-manual
         --disable-unittests
+        --disable-lzma
         --enable-static-tor
         --enable-static-libevent
         --enable-static-openssl
