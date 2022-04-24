@@ -16,6 +16,7 @@ ExternalProject_Add(tor
         --disable-html-manual
         --disable-unittests
         --disable-lzma
+        --disable-tool-name-check
         --enable-static-tor
         --enable-static-libevent
         --enable-static-openssl
