@@ -18,12 +18,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install MinGW
-      uses: egor-tensin/setup-mingw@v2
-      with:
-        platform: x64
-        static: 1
-        
     - uses: actions/checkout@v3
       with:
         submodules: recursive
