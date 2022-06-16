@@ -117,7 +117,7 @@ set(TOR_LIBRARIES
 # ------------
 
 add_library(onionpp onionpp.h)
-# set_target_properties(onionpp PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(onionpp PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(onionpp ${TOR_LIBRARIES})
 add_dependencies(onionpp tor)
 
