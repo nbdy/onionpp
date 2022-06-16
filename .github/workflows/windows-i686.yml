@@ -22,7 +22,7 @@ jobs:
         uses: msys2/setup-msys2@v2
 
       - name: Install pybind11
-        uses: pybind/pybind11@v3
+        uses: pybind/pybind11@v2.9
 
       - uses: actions/checkout@v3
         with:
