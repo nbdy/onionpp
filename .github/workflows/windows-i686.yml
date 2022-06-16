@@ -18,6 +18,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install pybind11
+        run: sudo apt install -y pybind11-dev
+
       - name: Set up MinGW
         uses: egor-tensin/setup-mingw@v2
         with:

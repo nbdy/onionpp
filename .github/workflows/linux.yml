@@ -18,6 +18,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install pybind11
+      run: sudo apt install -y pybind11-dev
+
     - uses: actions/checkout@v3
       with:
         submodules: recursive
