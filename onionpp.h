@@ -27,12 +27,7 @@ void secret_to_key_rfc2440(
 #include <string>
 #include <vector>
 #include <sstream>
-
-#ifdef _WIN32
-#include <mingw.thread.h>
-#else
 #include <thread>
-#endif
 
 namespace onionpp {
 
