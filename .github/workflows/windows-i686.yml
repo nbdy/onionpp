@@ -23,8 +23,6 @@ jobs:
 
       - name: Set up msys
         uses: msys2/setup-msys2@v2
-        with:
-          platform: i686
 
       - uses: actions/checkout@v3
         with:
