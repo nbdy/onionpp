@@ -97,4 +97,5 @@ set(TOR_LIBRARIES
 
         ${LIBLZMA_LIBRARIES}
         ${ZLIB_LIBRARIES}
+        dl
         )
