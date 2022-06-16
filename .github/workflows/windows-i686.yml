@@ -21,8 +21,8 @@ jobs:
       - name: Install pybind11
         run: sudo apt install -y pybind11-dev
 
-      - name: Set up MinGW
-        uses: egor-tensin/setup-mingw@v2
+      - name: Set up msys
+        uses: msys2/setup-msys2@v2
         with:
           platform: i686
 
