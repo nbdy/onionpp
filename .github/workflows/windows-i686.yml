@@ -12,21 +12,18 @@ env:
 
 jobs:
   build-windows:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # The CMake configure and build commands are platform-agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: windows-2016
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Set up msys
-        uses: msys2/setup-msys2@v2
-
-      - name: Install pybind11
-        uses: pybind/pybind11@v2.9
-
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+
+      - name: Set up mingw
+        uses: egor-tensin/setup-mingw@v2
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.

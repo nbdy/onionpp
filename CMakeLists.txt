@@ -1,17 +1,16 @@
 cmake_minimum_required(VERSION 3.14..3.21)
-# ------------
-option(PYTHON_BINDINGS "Build python bindings" OFF)
-# ------------
-cmake_minimum_required(VERSION 3.4)
 project(onionpp LANGUAGES CXX)
 
 option(WINDOWS "Build for windows" OFF)
 option(x86_64 "Build for x86_64" OFF)
+option(PYTHON_BINDINGS "Build python bindings" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(WINDOWS_PYTHON_DIRECTORY "")
 set(TOOLCHAIN_PREFIX "")
+
+include_directories(extern)
 
 include(ExternalProject)
 
@@ -28,8 +27,6 @@ if(WINDOWS)
 
     set(CMAKE_C_COMPILER ${TOOLCHAIN_PREFIX}gcc)
     set(CMAKE_CXX_COMPILER ${TOOLCHAIN_PREFIX}g++)
-
-    include_directories(mingw-std-threads)
 endif()
 
 include(cmake/AddTor.cmake)
