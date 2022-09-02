@@ -11,6 +11,8 @@ set(WINDOWS_PYTHON_DIRECTORY "")
 set(TOOLCHAIN_PREFIX "")
 
 include_directories(extern)
+add_subdirectory(extern/pybind11)
+set(PYBIND11_INSTALL ON)
 
 include(ExternalProject)
 
@@ -44,12 +46,17 @@ add_dependencies(onionpp_test tor)
 if(PYTHON_BINDINGS)
     find_package(pybind11 CONFIG REQUIRED)
     pybind11_add_module(onionpy python_binding.cpp)
+    set_target_properties(onionpy PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+    target_link_libraries(onionpy PUBLIC dl ${TOR_LIBRARIES})
     add_dependencies(onionpy tor)
 endif()
 
 if(WINDOWS)
-    target_link_libraries(onionpp_test PRIVATE -static -static-libgcc ${TOR_LIBRARIES} ws2_32 crypt32 shlwapi iphlpapi gdi32)
+    target_link_libraries(onionpp_test PRIVATE -static -static-libgcc ${TOR_LIBRARIES} ws2_32 crypt32 shlwapi iphlpapi gdi32 pthread)
 else()
     target_link_libraries(onionpp_test PRIVATE ${TOR_LIBRARIES} pthread m dl)
 endif()
 
+unset(WINDOWS CACHE)
+unset(x86_64 CACHE)
+unset(PYTHON_BINDINGS CACHE)
