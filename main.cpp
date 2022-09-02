@@ -10,11 +10,15 @@ void handler(int i_iSignal) {
 }
 
 int main() {
+#ifdef _WIN32
+  signal(SIGINT, handler);
+#else
   struct sigaction signalHandler {};
   signalHandler.sa_handler = handler;
   sigemptyset(&signalHandler.sa_mask);
   signalHandler.sa_flags = 0;
   sigaction(SIGINT, &signalHandler, nullptr);
+#endif
 
   std::cout << "Version: " << onionpp::Tor::getVersion() << std::endl;
   auto hashedPassword = onionpp::Tor::hashPassword("my_password");
