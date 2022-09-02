@@ -3,16 +3,12 @@ project(onionpp LANGUAGES CXX)
 
 option(WINDOWS "Build for windows" OFF)
 option(x86_64 "Build for x86_64" OFF)
-option(PYTHON_BINDINGS "Build python bindings" ON)
+option(PYTHON_BINDINGS "Build python bindings" OFF)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(WINDOWS_PYTHON_DIRECTORY "")
 set(TOOLCHAIN_PREFIX "")
-
-include_directories(extern)
-add_subdirectory(extern/pybind11)
-set(PYBIND11_INSTALL ON)
 
 include(ExternalProject)
 
@@ -44,6 +40,10 @@ add_dependencies(onionpp_test tor)
 
 # Python bindings
 if(PYTHON_BINDINGS)
+    include_directories(extern)
+    add_subdirectory(extern/pybind11)
+    set(PYBIND11_INSTALL ON)
+
     find_package(pybind11 CONFIG REQUIRED)
     pybind11_add_module(onionpy python_binding.cpp)
     set_target_properties(onionpy PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
