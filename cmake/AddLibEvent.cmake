@@ -7,7 +7,7 @@ ExternalProject_Add(libevent
         DOWNLOAD_COMMAND wget https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz && tar xf libevent-2.1.11-stable.tar.gz && rm libevent-2.1.11-stable.tar.gz && mv libevent-2.1.11-stable libevent
         UPDATE_DISCONNECTED 1
         BUILD_IN_SOURCE 1
-        CONFIGURE_COMMAND cd libevent-2.1.11-stable && ./autogen.sh && ./configure --disable-shared --enable-static --prefix=${LIBEVENT_BINARY_DIR} --host=${TOOLCHAIN}
+        CONFIGURE_COMMAND cd libevent-2.1.11-stable && ./autogen.sh && ./configure --enable-static --enable-shared --prefix=${LIBEVENT_BINARY_DIR} --host=${TOOLCHAIN}
         BUILD_COMMAND cd libevent-2.1.11-stable && make clean && make -j$(nproc)
         INSTALL_COMMAND cd libevent-2.1.11-stable && make clean && make install
         )
