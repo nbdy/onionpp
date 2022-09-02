@@ -1,7 +1,6 @@
 # onionpp
 [![Linux build](https://github.com/nbdy/onionpp/actions/workflows/linux.yml/badge.svg)](https://github.com/nbdy/onionpp/actions/workflows/linux.yml)
 [![Windows 32 bit build](https://github.com/nbdy/onionpp/actions/workflows/windows-i686.yml/badge.svg)](https://github.com/nbdy/onionpp/actions/workflows/windows-i686.yml)
-[![Windows 64 bit build](https://github.com/nbdy/onionpp/actions/workflows/windows-x64.yml/badge.svg)](https://github.com/nbdy/onionpp/actions/workflows/windows-x64.yml)
 
 embed tor in your application
 
