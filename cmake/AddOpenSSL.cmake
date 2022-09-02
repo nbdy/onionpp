@@ -21,7 +21,7 @@ ExternalProject_Add(openssl
         ./Configure ${CONFIGURE_PREFIX} no-shared no-asm
         --cross-compile-prefix=${TOOLCHAIN_PREFIX}
         --prefix=${OPENSSL_BINARY_DIR}
-        -static -static-libgcc
+        -static -static-libgcc -fPIC
         BUILD_COMMAND make clean && make
         INSTALL_COMMAND make install
         )
