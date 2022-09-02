@@ -7,6 +7,8 @@
 
 #include <cstdint>
 #include <cstddef>
+#include <csignal>
+#include <pthread.h>
 
 extern "C" {
 #ifdef _WIN32
@@ -121,10 +123,23 @@ class TorConfiguration {
 };
 
 class Tor {
-  std::thread *m_Thread = nullptr;
+  pthread_attr_t m_ThreadAttr {};
+  pthread_t m_Thread {};
+
+  static void* initThread(void* arg) {
+    char* rVal;
+    auto* pConfig = (TorConfiguration*) arg;
+    start(*pConfig);
+    return rVal;
+  }
 
   void startThread(const TorConfiguration& i_Configuration) {
-    m_Thread = new std::thread([i_Configuration] { start(i_Configuration); });
+    if(pthread_attr_init(&m_ThreadAttr) != 0) {
+      std::cerr << "Could not create thread attributes: " << strerror(errno) << "\n";
+    }
+    if(pthread_create(&m_Thread, &m_ThreadAttr, &Tor::initThread, (void*) &i_Configuration) != 0) {
+      std::cout << "Could not create thread: " << strerror(errno) << "\n";
+    }
   }
 
  public:
@@ -132,10 +147,18 @@ class Tor {
   explicit Tor(const TorConfiguration& i_Configuration) { startThread(i_Configuration); }
 
   ~Tor() {
-    if (m_Thread->joinable()) {
-      m_Thread->join();
+    int detachState = -1;
+    if (pthread_attr_getdetachstate(&m_ThreadAttr, &detachState) == 0) {
+      if(detachState == PTHREAD_CREATE_JOINABLE) {
+        if(pthread_kill(m_Thread, SIGINT) != 0) {
+          std::cerr << "Could not kill thread: " << strerror(errno) << "\n";
+        }
+      }
+    } else {
+      std::cerr << "Could not get detach state of thread: " << strerror(errno) << "\n";
     }
-    delete m_Thread;
+
+    pthread_attr_destroy(&m_ThreadAttr);
   }
 
   static const char* getVersion() {
