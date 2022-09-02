@@ -16,6 +16,7 @@ ExternalProject_Add(tor
         --disable-html-manual
         --disable-unittests
         --disable-lzma
+        --disable-zstd
         --disable-tool-name-check
         --enable-static-tor
         --enable-static-libevent
@@ -25,7 +26,7 @@ ExternalProject_Add(tor
         --with-openssl-dir=${OPENSSL_BINARY_DIR}
         --with-zlib-dir=${ZLIB_BINARY_DIR}
         --prefix=${TOR_BINARY_DIR}
-        BUILD_COMMAND make clean && make -j$(nproc) LDFLAGS="-L${TOOLCHAIN_LIB_PATH} -L${LIBEVENT_BINARY_DIR}/lib" CFLAGS="-I${TOOLCHAIN_LIB_PATH} -I${LIBEVENT_BINARY_DIR}/lib"
+        BUILD_COMMAND make clean && make -j$(nproc) LDFLAGS="-L${TOOLCHAIN_LIB_PATH} -L${LIBEVENT_LIBRARIES}" CFLAGS="-I${TOOLCHAIN_LIB_PATH} -I${LIBEVENT_LIBRARIES}"
         INSTALL_COMMAND make install
         )
 
@@ -96,6 +97,5 @@ set(TOR_LIBRARIES
         event
 
         ${LIBLZMA_LIBRARIES}
-        ${ZLIB_LIBRARIES}
-        dl
+        ${ZLIB_LIBRARY}
         )

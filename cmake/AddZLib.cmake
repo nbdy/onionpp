@@ -21,4 +21,5 @@ ExternalProject_Add(zlib
 ExternalProject_Get_Property(zlib SOURCE_DIR)
 set(ZLIB_SOURCE_PATH ${SOURCE_DIR}/src)
 include_directories(${ZLIB_SOURCE_PATH})
-set(ZLIB_LIBRARIES ${ZLIB_BINARY_DIR}/lib/libz.a)
+set(ZLIB_LIBRARY ${ZLIB_BINARY_DIR}/lib/libz.a)
+set(ZLIB_LIBRARIES ${ZLIB_BINARY_DIR}/lib)
