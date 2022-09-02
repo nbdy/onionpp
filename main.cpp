@@ -1,3 +1,6 @@
+#include <csignal>
+#include <unistd.h>
+
 #include "onionpp.h"
 
 bool bRun = true;
@@ -27,7 +30,7 @@ int main() {
   std::cout << "Tor is running now and can be controlled via the control port." << std::endl;
 
   while(bRun) {
-    sleep(1);
+    usleep(500000);
   }
 
   return 0;
