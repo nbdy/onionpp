@@ -2,13 +2,11 @@
 // Created by nbdy on 26.02.22.
 //
 
-#include "onionpp.h"
+#include "include/onionpp.h"
 
-#include "pybind11/pybind11.h"
+#include <pybind11/pybind11.h>
 
-#include <utility>
-
-PYBIND11_MODULE(onionpp, m) {
+PYBIND11_MODULE(onionpy, m) {
   pybind11::class_<onionpp::Tor> tor(m, "Tor");
   tor.def(pybind11::init([] {
     return new onionpp::Tor;
@@ -17,16 +15,12 @@ PYBIND11_MODULE(onionpp, m) {
     return new onionpp::Tor(i_Configuration);
   }));
 
-  tor.def("start", [](std::vector<char*> i_Arguments) {
-    return onionpp::Tor::start(std::move(i_Arguments));
-  });
-  tor.def("start", [](const onionpp::TorConfiguration& i_Configuration) {
-    return onionpp::Tor::start(i_Configuration);
-  });
-
   tor.def("get_version", &onionpp::Tor::getVersion, pybind11::return_value_policy::reference);
-  tor.def("hash_password", &onionpp::Tor::hashPassword, pybind11::return_value_policy::reference);
+  tor.def("hash_password", &onionpp::Tor::hashPassword);
+  tor.def("start", pybind11::overload_cast<>(&onionpp::Tor::start));
+  tor.def("start", pybind11::overload_cast<onionpp::TorConfiguration&>(&onionpp::Tor::start));
 
+  // ----------------------------
   pybind11::class_<onionpp::TorConfiguration> torConfiguration(m, "TorConfiguration");
   torConfiguration.def(pybind11::init([] {
     return new onionpp::TorConfiguration;

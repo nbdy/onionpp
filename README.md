@@ -11,12 +11,12 @@ embed tor in your application
 - libevent-dev
 - liblzma-dev
 - libssl-dev
-- libzstd-dev
 - zlib1g-dev
 
 ### windows
 
-TODO
+- all the linux dependencies
+- mingw
 
 ## features
 

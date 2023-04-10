@@ -1,10 +1,13 @@
+include(ExternalProject)
+
 if(${TOOLCHAIN_PREFIX} MATCHES "mingw32-$")
-    set(CONFIGURE_PREFIX mingw)
+    set(CONFIGURE_PREFIX -m32 mingw)
 elseif(${TOOLCHAIN_PREFIX} MATCHES "mingw64-$")
     set(CONFIGURE_PREFIX mingw64)
 else()
     set(CONFIGURE_PREFIX linux-generic32)
 endif()
+message("OpenSSL configure prefix: ${CONFIGURE_PREFIX}")
 
 set(OPENSSL_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/openssl/bin)
 
@@ -16,8 +19,6 @@ ExternalProject_Add(openssl
         UPDATE_DISCONNECTED 1
         BUILD_IN_SOURCE 1
         CONFIGURE_COMMAND
-        export CFLAGS="-I${TOOLCHAIN_LIB_PATH}" &&
-        export LDFLAGS="-static -static-libgcc -L${TOOLCHAIN_LIB_PATH}" &&
         ./Configure ${CONFIGURE_PREFIX} no-shared no-asm
         --cross-compile-prefix=${TOOLCHAIN_PREFIX}
         --prefix=${OPENSSL_BINARY_DIR}

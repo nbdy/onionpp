@@ -1,4 +1,5 @@
 #include <csignal>
+#include <iostream>
 #include <unistd.h>
 
 #include "onionpp.h"
@@ -20,8 +21,10 @@ int main() {
   sigaction(SIGINT, &signalHandler, nullptr);
 #endif
 
-  std::cout << "Version: " << onionpp::Tor::getVersion() << std::endl;
-  auto hashedPassword = onionpp::Tor::hashPassword("my_password");
+  auto tor = onionpp::Tor();
+
+  std::cout << "Version: " << tor.getVersion() << std::endl;
+  auto hashedPassword = tor.hashPassword("my_password");
   std::cout << hashedPassword << std::endl;
 
   auto cfg = onionpp::TorConfiguration();
@@ -30,7 +33,7 @@ int main() {
   cfg.setHashedControlPassword(hashedPassword);
   std::cout << "Created tor configuration" << std::endl;
 
-  auto tor = onionpp::Tor(cfg);
+  tor.start(cfg);
   std::cout << "Tor is running now and can be controlled via the control port." << std::endl;
 
   while(bRun) {
