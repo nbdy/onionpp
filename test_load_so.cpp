@@ -23,7 +23,7 @@ int main() {
   std::cout << "Creating tor instance" << std::endl;
   onionpp::ITor *tor = factory();
   std::cout << "Starting tor instance" << std::endl;
-  tor->start();
+  tor->start(true);
 
   return 0;
 }
