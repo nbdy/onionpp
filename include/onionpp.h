@@ -53,19 +53,22 @@ class TorConfiguration {
   std::string getProxyAddress() const;
 };
 
+struct STor {
+  static const char* getVersion();
+  static std::string hashPassword(const std::string &i_sValue);
+};
+
 class ITor {
  public:
   ITor() = default;
   ~ITor() = default;
 
-  virtual const char *getVersion() = 0;
   virtual void start(bool i_Wait) = 0;
-  virtual std::string hashPassword(const std::string &i_sValue) = 0;
   virtual bool isBootstrapped() = 0;
   virtual void waitUntilBootstrapped() = 0;
 };
 
-class Tor : public ITor {
+class Tor : public ITor, public STor {
   pthread_t m_Thread {};
   TorConfiguration m_Configuration;
 
@@ -74,9 +77,7 @@ class Tor : public ITor {
   explicit Tor(const TorConfiguration &i_Configuration) : m_Configuration(i_Configuration) {}
   ~Tor();
 
-  const char *getVersion() override;
   void start(bool i_Wait) override;
-  std::string hashPassword(const std::string &i_sValue) override;
   bool isBootstrapped() override;
   void waitUntilBootstrapped() override;
 

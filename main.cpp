@@ -21,19 +21,17 @@ int main() {
   sigaction(SIGINT, &signalHandler, nullptr);
 #endif
 
-  auto tor = onionpp::Tor();
-
-  std::cout << "Version: " << tor.getVersion() << std::endl;
-  auto hashedPassword = tor.hashPassword("my_password");
+  std::cout << "Version: " << onionpp::Tor::getVersion() << std::endl;
+  auto hashedPassword = onionpp::Tor::hashPassword("my_password");
   std::cout << hashedPassword << std::endl;
 
-  auto cfg = onionpp::TorConfiguration();
+  onionpp::TorConfiguration cfg {};
   cfg.setControlPortEnabled(true);
   cfg.setHashedPasswordAuthenticationEnabled(true);
   cfg.setHashedControlPassword(hashedPassword);
   std::cout << "Created tor configuration" << std::endl;
 
-  tor.start(cfg);
+  onionpp::Tor tor(cfg);
   std::cout << "Tor is running now and can be controlled via the control port." << std::endl;
 
   while(bRun) {

@@ -92,7 +92,7 @@ std::vector<char *> onionpp::TorConfiguration::toArguments() {
 std::string onionpp::TorConfiguration::getProxyAddress() const {
   return "socks5h://127.0.0.1:" + std::to_string(m_u16SocksPort);
 }
-const char *onionpp::Tor::getVersion() {
+const char *onionpp::STor::getVersion() {
   return tor_api_get_provider_version();
 }
 bool onionpp::Tor::_start() {
@@ -111,7 +111,7 @@ bool onionpp::Tor::start(std::vector<char *> i_Arguments) {
   tor_main_configuration_free(cfg);
   return rVal;
 }
-std::string onionpp::Tor::hashPassword(const std::string &i_sValue) {
+std::string onionpp::STor::hashPassword(const std::string &i_sValue) {
   char output[256];
   memset(output, 0, sizeof(output));
   char key[29];
