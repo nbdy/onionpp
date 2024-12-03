@@ -1,6 +1,6 @@
 include(ExternalProject)
+
 include(cmake/AddLibEvent.cmake)
-include(cmake/AddZLib.cmake)
 
 set(TOR_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/tor/bin/)
 
@@ -8,31 +8,38 @@ ExternalProject_Add(tor
         PREFIX tor
         GIT_REPOSITORY https://git.torproject.org/tor.git
         GIT_PROGRESS 1
-        GIT_TAG tor-0.4.6.10
+        GIT_SUBMODULES ""
+        GIT_TAG tor-0.4.8.13
         UPDATE_DISCONNECTED 1
         BUILD_IN_SOURCE 1
-        CONFIGURE_COMMAND ./autogen.sh && ./configure --host=${TOOLCHAIN}
+        CONFIGURE_COMMAND ./autogen.sh &&
+        ./configure
+        --host=${TOOLCHAIN}
+        --disable-rust
         --disable-asciidoc
         --disable-manpage
         --disable-html-manual
         --disable-unittests
         --disable-lzma
         --disable-zstd
+        --disable-systemd
         --disable-tool-name-check
         --enable-static-tor
-        --enable-static-libevent
-        --enable-static-openssl
         --enable-static-zlib
-        --enable-pic
-        --with-libevent-dir=${LIBEVENT_BINARY_DIR}
-        --with-openssl-dir=${OPENSSL_BINARY_DIR}
         --with-zlib-dir=${ZLIB_BINARY_DIR}
+        --enable-static-libevent
+        --with-libevent-dir=${LIBEVENT_BINARY_DIR}
+        --enable-static-openssl
+        --with-openssl-dir=${OPENSSL_BINARY_DIR}
+        --enable-pic
+        # TODO: --enable-android
         --prefix=${TOR_BINARY_DIR}
-        BUILD_COMMAND make clean && LDFLAGS="-L${TOOLCHAIN_LIB_PATH}" CFLAGS="-I${TOOLCHAIN_LIB_PATH}" make -j$(nproc)
+        BUILD_COMMAND make clean &&
+        LDFLAGS="-L${TOOLCHAIN_LIB_PATH}" CFLAGS="-I${TOOLCHAIN_LIB_PATH}" make -j${CMAKE_BUILD_PARALLEL_LEVEL}
         INSTALL_COMMAND make install
-        )
+)
 
-add_dependencies(tor libevent tor-zlib openssl)
+add_dependencies(tor openssl libevent zlib)
 ExternalProject_Get_Property(tor SOURCE_DIR)
 set(TOR_SOURCE_PATH ${SOURCE_DIR}/src)
 include_directories(${TOR_SOURCE_PATH})
@@ -84,12 +91,12 @@ set(TOR_LIBRARY_PATHS
         ${OPENSSL_LIBRARIES}/libcrypto.a
         ${LIBEVENT_LIBRARIES}/libevent.a
         ${ZLIB_LIBRARY}
-        )
+)
 
 file(GLOB TOR_CLIENT_OBJECTS
         ${TOR_SOURCE_PATH}/feature/api/tor_api.o
         ${TOR_SOURCE_PATH}/feature/client/*.o
-        )
+)
 
 set(TOR_LIBRARIES
         -L${TOR_SOURCE_PATH}/core
@@ -146,11 +153,11 @@ set(TOR_LIBRARIES
         -L${TOR_SOURCE_PATH}/trunnel
         or-trunnel
 
-        -L${OPENSSL_LIBRARIES}
-        ssl crypto
-
         -L${LIBEVENT_LIBRARIES}
         event
 
         ${ZLIB_LIBRARY}
-        )
+        z
+
+        cap
+)
