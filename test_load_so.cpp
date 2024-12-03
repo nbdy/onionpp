@@ -3,15 +3,16 @@
 //
 
 #include <filesystem>
-#include "include/onionpp.h"
 #include <dlfcn.h>
 #include <iostream>
+
+#include "include/onionpp.h"
 
 typedef onionpp::ITor* (*TorFactory)();
 
 int main() {
   std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
-  auto path = std::filesystem::current_path() / "libonionpp.so";
+  const auto path = std::filesystem::current_path() / "libonionpp.so";
   std::cout << "Loading library: " << path.c_str() << std::endl;
   void *handle = dlopen(path.c_str(), RTLD_LAZY);
   if (handle == nullptr) {
@@ -19,7 +20,7 @@ int main() {
     return 0;
   }
   std::cout << "Loading create_tor symbol" << std::endl;
-  auto factory = reinterpret_cast<TorFactory>(dlsym(handle, "create_tor"));
+  const auto factory = reinterpret_cast<TorFactory>(dlsym(handle, "create_tor"));
   std::cout << "Creating tor instance" << std::endl;
   onionpp::ITor *tor = factory();
   std::cout << "Starting tor instance" << std::endl;

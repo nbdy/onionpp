@@ -2,11 +2,11 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "onionpp.h"
+#include "onionpp/onionpp.h"
 
 bool bRun = true;
 
-void handler(int i_iSignal) {
+void handler(int _) {
   bRun = false;
 }
 
@@ -21,14 +21,15 @@ int main() {
   sigaction(SIGINT, &signalHandler, nullptr);
 #endif
 
-  std::cout << "Version: " << onionpp::Tor::getVersion() << std::endl;
-  auto hashedPassword = onionpp::Tor::hashPassword("my_password");
+  std::cout << "Version: " << onionpp::getVersion() << std::endl;
+  const auto hashedPassword = onionpp::hashPassword("my_password");
   std::cout << hashedPassword << std::endl;
 
-  onionpp::TorConfiguration cfg {};
-  cfg.setControlPortEnabled(true);
-  cfg.setHashedPasswordAuthenticationEnabled(true);
-  cfg.setHashedControlPassword(hashedPassword);
+  auto cfg = std::make_shared<onionpp::Configuration>();
+  cfg->setOption(onionpp::Option::ControlPort, "1");
+  cfg->setOption(onionpp::Option::ControlPortHashedPassword, "1");
+  cfg->setOption(onionpp::Option::HashedControlPassword, hashedPassword);;
+
   std::cout << "Created tor configuration" << std::endl;
 
   onionpp::Tor tor(cfg);
