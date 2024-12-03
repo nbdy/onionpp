@@ -22,8 +22,6 @@ embed tor in your application
 
 - [X] start tor
   - [X] with inline configuration
-- [X] python bindings
-
 
 - Size of onionpp_test build for
   - windows/i686: 10MB
@@ -42,12 +40,6 @@ int main() {
 }
 ```
 
-## screenshots
+## bindings
 
-### windows
-
-![onionpp_test](https://i.ibb.co/XXDgWyt/grafik.png)
-
-### linux
-
-![onionpp_test](https://i.ibb.co/t2LJxkB/grafik.png)
+- [X] [python](https://github.com/nbdy/onionpy)
