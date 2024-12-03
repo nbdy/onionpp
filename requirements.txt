@@ -1,4 +1,0 @@
-stem~=1.8.0
-rich~=12.4.4
-setuptools~=65.5.1
-pybind11~=2.9.2

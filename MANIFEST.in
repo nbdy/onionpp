@@ -1,3 +1,0 @@
-include *.sh
-include onionpp.h
-ignore tor
