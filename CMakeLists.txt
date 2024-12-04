@@ -59,6 +59,12 @@ target_compile_definitions(onionpp PUBLIC
         ONIONPP_VERSION="${PROJECT_VERSION}"
 )
 add_dependencies(onionpp tor)
+install(TARGETS onionpp
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin
+)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION include)
 
 if (EXAMPLE)
     # Test executable
