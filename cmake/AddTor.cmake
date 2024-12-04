@@ -153,6 +153,10 @@ set(TOR_LIBRARIES
         -L${TOR_SOURCE_PATH}/trunnel
         or-trunnel
 
+        -L${OPENSSL_LIBRARIES}
+        crypto
+        ssl
+
         -L${LIBEVENT_LIBRARIES}
         event
 
