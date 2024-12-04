@@ -52,6 +52,12 @@ include(cmake/AddTor.cmake)
 # onionpp library
 add_library(onionpp SHARED ${ONIONPP_SOURCES})
 set_target_properties(onionpp PROPERTIES LINKER_LANGUAGE CXX)
+target_compile_definitions(onionpp PUBLIC
+        ONIONPP_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
+        ONIONPP_VERSION_MINOR=${PROJECT_VERSION_MINOR}
+        ONIONPP_VERSION_PATCH=${PROJECT_VERSION_PATCH}
+        ONIONPP_VERSION="${PROJECT_VERSION}"
+)
 add_dependencies(onionpp tor)
 
 if (EXAMPLE)
@@ -66,14 +72,14 @@ if(WINDOWS)
     set(onionpp_LINK_LIBRARIES -static -static-libgcc ${TOR_LIBRARY_PATHS} ws2_32 crypt32 shlwapi iphlpapi gdi32 pthread)
     target_link_libraries(onionpp ${onionpp_LINK_LIBRARIES})
     if (EXAMPLE)
-        target_link_libraries(onionpp_test PRIVATE ${onionpp_LINK_LIBRARIES})
+        target_link_libraries(onionpp_test PRIVATE ${onionpp_LINK_LIBRARIES} onionpp)
     endif ()
 else()
     message("Building for linux")
     set(onionpp_LINK_LIBRARIES ${TOR_LIBRARIES} pthread m dl)
     target_link_libraries(onionpp ${onionpp_LINK_LIBRARIES})
     if (EXAMPLE)
-        target_link_libraries(onionpp_test PRIVATE ${onionpp_LINK_LIBRARIES})
+        target_link_libraries(onionpp_test PRIVATE ${onionpp_LINK_LIBRARIES} onionpp)
     endif ()
     if (SO_TEST)
         add_executable(onionpp_so_test test_load_so.cpp)
