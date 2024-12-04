@@ -17,10 +17,10 @@ class Tor final : public ITor {
 
  public:
   Tor();
-  explicit Tor(const IConfigurationPtr& i_Configuration);
+  explicit Tor(IConfigurationPtr  i_Configuration);
   ~Tor() override;
 
-  bool start(bool i_Wait = true) override;
+  bool start(bool i_Wait) override;
   void stop() override;
   bool isBootstrapped() override;
   void waitUntilBootstrapped() override;

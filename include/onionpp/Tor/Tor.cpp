@@ -2,30 +2,27 @@
 // Created by nbdy on 03.12.24.
 //
 
+#include <utility>
 #include <vector>
+#include <bits/ranges_util.h>
 
 #include "Tor.h"
 
 #include "onionpp/Option/OptionMapping.h"
 #include "onionpp/Configuration/Configuration.h"
 
-#include <bits/ranges_util.h>
+#include <feature/api/tor_api.h>
 
 extern "C" {
-struct tor_main_configuration_t;
-int control_get_bootstrap_percent(void);
-void tor_shutdown_event_loop_and_exit(int exitcode);
-int tor_run_main(const tor_main_configuration_t* tor_cfg);
-tor_main_configuration_t* tor_main_configuration_new(void);
-void tor_main_configuration_free(tor_main_configuration_t* cfg);
-int tor_main_configuration_set_command_line(tor_main_configuration_t* cfg, int argc, char* argv[]);
+  int control_get_bootstrap_percent(void);
+  void tor_shutdown_event_loop_and_exit(int exitcode);
 }
 
 onionpp::Tor::Tor() {
   m_Configuration = std::make_shared<Configuration>();
 }
 
-onionpp::Tor::Tor(const IConfigurationPtr& i_Configuration): m_Configuration(i_Configuration) {}
+onionpp::Tor::Tor(IConfigurationPtr  i_Configuration): m_Configuration(std::move(i_Configuration)) {}
 
 onionpp::Tor::~Tor() {
   stop();
