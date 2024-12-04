@@ -50,7 +50,7 @@ endif()
 include(cmake/AddTor.cmake)
 
 # onionpp library
-add_library(onionpp SHARED ${ONIONPP_SOURCES})
+add_library(onionpp STATIC ${ONIONPP_SOURCES})
 set_target_properties(onionpp PROPERTIES LINKER_LANGUAGE CXX)
 target_compile_definitions(onionpp PUBLIC
         ONIONPP_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
