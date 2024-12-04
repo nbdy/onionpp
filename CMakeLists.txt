@@ -50,20 +50,24 @@ endif()
 include(cmake/AddTor.cmake)
 
 # onionpp library
-add_library(onionpp STATIC ${ONIONPP_SOURCES})
-set_target_properties(onionpp PROPERTIES LINKER_LANGUAGE CXX)
+add_library(onionpp OBJECT ${ONIONPP_SOURCES})
+set_target_properties(onionpp PROPERTIES POSITION_INDEPENDENT_CODE 1)
 target_compile_definitions(onionpp PUBLIC
         ONIONPP_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
         ONIONPP_VERSION_MINOR=${PROJECT_VERSION_MINOR}
         ONIONPP_VERSION_PATCH=${PROJECT_VERSION_PATCH}
         ONIONPP_VERSION="${PROJECT_VERSION}"
 )
-add_dependencies(onionpp tor)
-install(TARGETS onionpp
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin
-)
+
+add_library(onionpp-shared SHARED $<TARGET_OBJECTS:onionpp>)
+set_target_properties(onionpp-shared PROPERTIES LINKER_LANGUAGE CXX)
+add_dependencies(onionpp-shared tor)
+
+add_library(onionpp-static STATIC $<TARGET_OBJECTS:onionpp>)
+set_target_properties(onionpp-static PROPERTIES LINKER_LANGUAGE CXX)
+add_dependencies(onionpp-static tor)
+
+install(TARGETS onionpp-static onionpp-shared LIBRARY DESTINATION lib)
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION include)
 
 if (EXAMPLE)
