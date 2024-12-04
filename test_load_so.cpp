@@ -6,7 +6,7 @@
 #include <dlfcn.h>
 #include <iostream>
 
-#include "include/onionpp.h"
+#include "onionpp/onionpp.h"
 
 typedef onionpp::ITor* (*TorFactory)();
 
