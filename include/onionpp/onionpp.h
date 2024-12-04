@@ -8,10 +8,10 @@
 #include "Tor/Tor.h"
 
 namespace onionpp {
-static const char* getVersion();
-static const char* getTorVersion();
+const char* getVersion();
+const char* getTorVersion();
 
-static std::string hashPassword(const std::string& i_sValue);
+std::string hashPassword(const std::string& i_sValue);
 }
 
 #endif//ONIONPP_ONIONPP_H
