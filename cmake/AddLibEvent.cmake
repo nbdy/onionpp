@@ -6,6 +6,7 @@ set(LIBEVENT_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/libevent/bin)
 
 ExternalProject_Add(libevent
         PREFIX libevent
+        DEPENDS openssl
         GIT_REPOSITORY https://github.com/libevent/libevent
         GIT_PROGRESS 1
         GIT_TAG release-2.1.12-stable
@@ -22,7 +23,6 @@ ExternalProject_Add(libevent
         INSTALL_COMMAND make install
 )
 
-add_dependencies(libevent openssl)
 ExternalProject_Get_Property(libevent SOURCE_DIR)
 set(LIBEVENT_SOURCE_PATH ${SOURCE_DIR}/src)
 include_directories(${LIBEVENT_SOURCE_PATH})

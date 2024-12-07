@@ -22,7 +22,7 @@ onionpp::Tor::Tor() {
   m_Configuration = std::make_shared<Configuration>();
 }
 
-onionpp::Tor::Tor(IConfigurationPtr  i_Configuration): m_Configuration(std::move(i_Configuration)) {}
+onionpp::Tor::Tor(IConfigurationPtr i_Configuration): m_Configuration(std::move(i_Configuration)) {}
 
 onionpp::Tor::~Tor() {
   stop();

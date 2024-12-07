@@ -15,6 +15,7 @@ set(OPENSSL_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/openssl/bin)
 
 ExternalProject_Add(openssl
         PREFIX openssl
+        DEPENDS zlib
         GIT_REPOSITORY https://github.com/openssl/openssl
         GIT_PROGRESS 1
         GIT_TAG OpenSSL_1_0_2j
@@ -30,7 +31,6 @@ ExternalProject_Add(openssl
         INSTALL_COMMAND make install
 )
 
-add_dependencies(openssl zlib)
 ExternalProject_Get_Property(openssl SOURCE_DIR)
 set(OPENSSL_SOURCE_PATH ${SOURCE_DIR}/src)
 include_directories(${OPENSSL_SOURCE_PATH})

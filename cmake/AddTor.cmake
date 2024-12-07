@@ -6,6 +6,7 @@ set(TOR_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/tor/bin/)
 
 ExternalProject_Add(tor
         PREFIX tor
+        DEPENDS openssl libevent zlib
         GIT_REPOSITORY https://git.torproject.org/tor.git
         GIT_PROGRESS 1
         GIT_SUBMODULES ""
@@ -39,10 +40,8 @@ ExternalProject_Add(tor
         INSTALL_COMMAND make install
 )
 
-add_dependencies(tor openssl libevent zlib)
 ExternalProject_Get_Property(tor SOURCE_DIR)
 set(TOR_SOURCE_PATH ${SOURCE_DIR}/src)
-include_directories(${TOR_SOURCE_PATH})
 
 set(TOR_LIBRARY_PATHS
         ${TOR_SOURCE_PATH}/core/libtor-app.a
