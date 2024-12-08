@@ -11,25 +11,29 @@
 
 namespace onionpp {
 enum class Option {
-  SocksPort,
-  ControlPort,
+  SOCKSPort,
   DataDirectory,
-  Log,
+  ControlPort,
+  HashedControlPassword,
+  CookieAuthentication,
   HiddenServiceDir,
   HiddenServicePort,
-  Bridge,
-  ExitNodes,
-  EntryNodes,
-  ExcludeNodes,
-  ClientOnly,
+  ORPort,
+  Address,
+  OutboundBindAddress,
+  Nickname,
   RelayBandwidthRate,
   RelayBandwidthBurst,
-  ORPort,
-  FallbackDir,
-  DisableNetwork,
-  ListenAddress,
-  ControlPortHashedPassword,
-  HashedControlPassword
+  AccountingMax,
+  AccountingRule,
+  AccountingStart,
+  ContactInfo,
+  DirPort,
+  DirPortFrontPage,
+  MyFamily,
+  ExitPolicy,
+  BridgeRelay,
+  PublishServerDescriptor,
 };
 using ConfigOptionMap = std::unordered_map<Option, std::string>;
 };

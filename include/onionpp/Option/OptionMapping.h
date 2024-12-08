@@ -16,26 +16,34 @@ struct ConfigOptionMapping {
   const char* m_TorOption;
 };
 
-static constexpr std::array<ConfigOptionMapping, 19> getOptionMapping() {
-  return {{{Option::SocksPort, "TOR_SOCKS_PORT", "--SocksPort"},
-           {Option::ControlPort, "TOR_CONTROL_PORT", "--ControlPort"},
-           {Option::DataDirectory, "TOR_DATA_DIRECTORY", "--DataDirectory"},
-           {Option::Log, "TOR_LOG", "--Log"},
-           {Option::HiddenServiceDir, "TOR_HIDDEN_SERVICE_DIR", "--HiddenServiceDir"},
-           {Option::HiddenServicePort, "TOR_HIDDEN_SERVICE_PORT", "--HiddenServicePort"},
-           {Option::Bridge, "TOR_BRIDGE", "--Bridge"},
-           {Option::ExitNodes, "TOR_EXIT_NODES", "--ExitNodes"},
-           {Option::EntryNodes, "TOR_ENTRY_NODES", "--EntryNodes"},
-           {Option::ExcludeNodes, "TOR_EXCLUDE_NODES", "--ExcludeNodes"},
-           {Option::ClientOnly, "TOR_CLIENT_ONLY", "--ClientOnly"},
-           {Option::RelayBandwidthRate, "TOR_RELAY_BANDWIDTH_RATE", "--RelayBandwidthRate"},
-           {Option::RelayBandwidthBurst, "TOR_RELAY_BANDWIDTH_BURST", "--RelayBandwidthBurst"},
-           {Option::ORPort, "TOR_OR_PORT", "--ORPort"},
-           {Option::FallbackDir, "TOR_FALLBACK_DIR", "--FallbackDir"},
-           {Option::DisableNetwork, "TOR_DISABLE_NETWORK", "--DisableNetwork"},
-           {Option::ListenAddress, "TOR_LISTEN_ADDRESS", "--ListenAddress"},
-           {Option::ControlPortHashedPassword, "TOR_CONTROL_PORT_HASHED_PASSWORD", "--ControlPortHashedPassword"},
-           {Option::HashedControlPassword, "TOR_HASHED_CONTROL_PASSWORD", "--HashedControlPassword"}}};
+static constexpr std::array<ConfigOptionMapping, 23> getOptionMapping() {
+  return {
+    {
+      {Option::SOCKSPort, "TOR_SOCKS_PORT", "--SOCKSPort"},
+      {Option::DataDirectory, "TOR_DATA_DIRECTORY", "--DataDirectory"},
+      {Option::ControlPort, "TOR_CONTROL_PORT", "--ControlPort"},
+      {Option::HashedControlPassword, "TOR_HASHED_CONTROL_PASSWORD", "--HashedControlPassword"},
+      {Option::CookieAuthentication, "TOR_COOKIE_AUTHENTICATION", "--CookieAuthentication"},
+      {Option::HiddenServiceDir, "TOR_HIDDEN_SERVICE_DIR", "--HiddenServiceDir"},
+      {Option::HiddenServicePort, "TOR_HIDDEN_SERVICE_PORT", "--HiddenServicePort"},
+      {Option::ORPort, "TOR_ORPORT", "--ORPort"},
+      {Option::Address, "TOR_ADDRESS", "--Address"},
+      {Option::OutboundBindAddress, "TOR_OUTBOUND_BIND_ADDRESS", "--OutboundBindAddress"},
+      {Option::Nickname, "TOR_NICKNAME", "--Nickname"},
+      {Option::RelayBandwidthRate, "TOR_RELAY_BANDWIDTH_RATE", "--RelayBandwidthRate"},
+      {Option::RelayBandwidthBurst, "TOR_RELAY_BANDWIDTH_BURST", "--RelayBandwidthBurst"},
+      {Option::AccountingMax, "TOR_ACCOUNTING_MAX", "--AccountingMax"},
+      {Option::AccountingRule, "TOR_ACCOUNTING_RULE", "--AccountingRule"},
+      {Option::AccountingStart, "TOR_ACCOUNTING_START", "--AccountingStart"},
+      {Option::ContactInfo, "TOR_CONTACT_INFO", "--ContactInfo"},
+      {Option::DirPort, "TOR_DIR_PORT", "--DirPort"},
+      {Option::DirPortFrontPage, "TOR_DIR_PORT_FRONT_PAGE", "--DirPortFrontPage"},
+      {Option::MyFamily, "TOR_MY_FAMILY", "--MyFamily"},
+      {Option::ExitPolicy, "TOR_EXIT_POLICY", "--ExitPolicy"},
+      {Option::BridgeRelay, "TOR_BRIDGE_RELAY", "--BridgeRelay"},
+      {Option::PublishServerDescriptor, "TOR_PUBLISH_SERVER_DESCRIPTOR", "--PublishServerDescriptor"}
+    }
+  };
 }
 static constexpr auto OptionMapping = getOptionMapping();
 }
