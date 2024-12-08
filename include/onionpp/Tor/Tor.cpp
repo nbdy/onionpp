@@ -65,13 +65,13 @@ onionpp::IConfigurationPtr onionpp::Tor::getConfiguration() {
   return m_Configuration;
 }
 
-void *onionpp::Tor::_start(void *i_Configuration) {
+void *onionpp::Tor::_start(void *i_Tor) {
+  const auto tor = static_cast<Tor*>(i_Tor);
   tor_main_configuration_t *tor_cfg = tor_main_configuration_new();
-  const auto configuration = static_cast<IConfiguration*>(i_Configuration);
   std::vector<std::string> strArgs;
   strArgs.emplace_back("tor");
 
-  for (const auto& [key, value] : configuration->getOptions()) {
+  for (const auto& [key, value] : tor->getConfiguration()->getOptions()) {
     const auto it = std::ranges::find_if(OptionMapping,
                            [key](const ConfigOptionMapping& mapping) { return mapping.m_Option == key; });
     if (it != std::end(OptionMapping)) {

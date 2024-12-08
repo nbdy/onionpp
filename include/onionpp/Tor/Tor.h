@@ -29,7 +29,7 @@ class Tor final : public ITor {
   IConfigurationPtr getConfiguration() override;
 
  protected:
-  static void* _start(void* i_Configuration);
+  static void* _start(void* i_Tor);
 };
 }// namespace onionpp
 
