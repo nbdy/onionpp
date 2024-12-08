@@ -15,12 +15,12 @@ public:
   IConfiguration() = default;
   virtual ~IConfiguration() = default;
 
-  virtual ConfigOptionMap getOptions() const = 0;
+  [[nodiscard]] virtual ConfigOptionMap getOptions() const = 0;
 
-  virtual std::string getOption(const Option& i_Option) const = 0;
+  [[nodiscard]] virtual std::string getOption(const Option& i_Option) const = 0;
   virtual void setOption(const Option& i_Option, const std::string& i_Value) = 0;
 
-  virtual std::string getSocks5Address() const = 0;
+  [[nodiscard]] virtual std::string getSocks5Address() const = 0;
 };
 using IConfigurationPtr = std::shared_ptr<IConfiguration>;
 };

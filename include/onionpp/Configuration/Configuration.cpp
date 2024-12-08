@@ -18,9 +18,9 @@ onionpp::Configuration::Configuration() {
   parseEnvironment();
 }
 
-onionpp::Configuration::Configuration(uint16_t i_Socks5Port) {
+onionpp::Configuration::Configuration(const uint16_t i_Socks5Port) {
   parseEnvironment();
-  m_OptionMap[Option::SocksPort] = std::to_string(i_Socks5Port);
+  m_OptionMap[Option::SOCKSPort] = std::to_string(i_Socks5Port);
 }
 
 onionpp::ConfigOptionMap onionpp::Configuration::getOptions() const {
@@ -39,6 +39,6 @@ void onionpp::Configuration::setOption(const Option& i_Option, const std::string
 }
 
 std::string onionpp::Configuration::getSocks5Address() const {
-  return "socks5h://127.0.0.1:" + getOption(Option::SocksPort);
+  return "socks5h://127.0.0.1:" + getOption(Option::SOCKSPort);
 }
 
