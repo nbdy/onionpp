@@ -7,7 +7,6 @@
 
 #include <cstdint>
 
-#include "onionpp/Option/Option.h"
 #include "IConfiguration.h"
 
 namespace onionpp {
@@ -18,8 +17,19 @@ class Configuration final : public IConfiguration {
   void parseEnvironment();
 
   public:
+  /*!
+  Parses environment variables
+   */
   Configuration();
+  /*!
+  Parses environment variables and then sets socks port
+   */
   explicit Configuration(uint16_t i_Socks5Port);
+  /*!
+  Moves ConfigOptionMap to member variable.
+  Does NOT parse environment.
+   */
+  explicit Configuration(ConfigOptionMap  i_ConfigOptionMap);
 
   ConfigOptionMap getOptions() const override;
 

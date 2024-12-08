@@ -3,10 +3,6 @@
 
 #include <string>
 
-#include "Option/Option.h"
-#include "Configuration/Configuration.h"
-#include "Tor/Tor.h"
-
 namespace onionpp {
 const char* getVersion();
 const char* getTorVersion();

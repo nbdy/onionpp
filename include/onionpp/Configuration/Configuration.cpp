@@ -2,14 +2,16 @@
 // Created by nbdy on 03.12.24.
 //
 
+#include <utility>
+
 #include "Configuration.h"
 
 #include "onionpp/Option/OptionMapping.h"
 
 void onionpp::Configuration::parseEnvironment() {
   for (const auto& mapping: OptionMapping) {
-    if (const char* value = std::getenv(mapping.EnvVar)) {
-      m_OptionMap[mapping.Option] = value;
+    if (const char* value = std::getenv(mapping.EnvVar.data())) {
+      m_OptionMap[mapping.ConfigOption] = value;
     }
   }
 }
@@ -22,6 +24,8 @@ onionpp::Configuration::Configuration(const uint16_t i_Socks5Port) {
   parseEnvironment();
   m_OptionMap[Option::SOCKSPort] = std::to_string(i_Socks5Port);
 }
+
+onionpp::Configuration::Configuration(ConfigOptionMap  i_ConfigOptionMap): m_OptionMap(std::move(i_ConfigOptionMap)) {}
 
 onionpp::ConfigOptionMap onionpp::Configuration::getOptions() const {
   return m_OptionMap;

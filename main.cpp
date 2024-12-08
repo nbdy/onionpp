@@ -5,8 +5,10 @@
 
 #include "CLI/CLI.hpp"
 
-#include "onionpp/onionpp.h"
-
+#include <onionpp/Configuration/Configuration.h>
+#include <onionpp/Option/OptionMapping.h>
+#include <onionpp/Tor/Tor.h>
+#include <onionpp/onionpp.h>
 
 bool bRun = true;
 
@@ -14,7 +16,7 @@ void handler(int) {
   bRun = false;
 }
 
-int main(int argc, char** argv) {
+int main(const int argc, char** argv) {
 #ifdef _WIN32
   signal(SIGINT, handler);
 #else
@@ -28,27 +30,22 @@ int main(int argc, char** argv) {
   CLI::App app {"Tor++"};
   argv = app.ensure_utf8(argv);
 
-  bool disableCookieAuthentication = false;
-  std::string controlPortPassword = "changeme";
-
-  app.add_option("--cookie", controlPortPassword, "Password used for the control port");
-  app.add_flag("--cookie-authentication", disableCookieAuthentication, "Disable control port authentication");
+  onionpp::ConfigOptionMap configuration {};
+  for (const auto& mapping : onionpp::OptionMapping) {
+    if (mapping.DefaultValue.empty() == false) {
+      configuration[mapping.ConfigOption] = mapping.DefaultValue;
+      app.add_option(mapping.ArgVar.data(), configuration[mapping.ConfigOption], mapping.Description.data());
+    }
+  }
 
   CLI11_PARSE(app, argc, argv);
 
   std::cout << "Version: " << onionpp::getVersion() << std::endl;
-  const auto hashedPassword = onionpp::hashPassword(controlPortPassword);
-
-  const auto cfg = std::make_shared<onionpp::Configuration>();
-  cfg->setOption(onionpp::Option::ControlPort, "1");
-  cfg->setOption(onionpp::Option::CookieAuthentication, disableCookieAuthentication ? "0" : "1");
-  if (disableCookieAuthentication == false) {
-    cfg->setOption(onionpp::Option::HashedControlPassword, hashedPassword);
-  }
+  onionpp::Configuration cfg(configuration);
 
   std::cout << "Created tor configuration" << std::endl;
 
-  onionpp::Tor tor(cfg);
+  onionpp::Tor tor(std::make_shared<onionpp::Configuration>(cfg));
   std::cout << "Tor is running now and can be controlled via the control port." << std::endl;
   tor.start(true);
 
