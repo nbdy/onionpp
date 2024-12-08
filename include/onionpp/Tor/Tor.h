@@ -22,6 +22,7 @@ class Tor final : public ITor {
 
   bool start(bool i_Wait) override;
   void stop() override;
+  void join() override;
   bool isBootstrapped() override;
   void waitUntilBootstrapped() override;
   uint8_t getBootstrapPercentage() override;

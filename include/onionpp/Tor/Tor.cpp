@@ -11,9 +11,15 @@
 #include "onionpp/Option/OptionMapping.h"
 #include "onionpp/Configuration/Configuration.h"
 
-#include <feature/api/tor_api.h>
-
 extern "C" {
+  typedef struct tor_main_configuration_t tor_main_configuration_t;
+  tor_main_configuration_t *tor_main_configuration_new(void);
+  void tor_main_configuration_free(tor_main_configuration_t *cfg);
+  int tor_main_configuration_set_command_line(tor_main_configuration_t *cfg,
+                                            int argc, char *argv[]);
+  const char *tor_api_get_provider_version(void);
+  int tor_run_main(const tor_main_configuration_t *);
+
   int control_get_bootstrap_percent(void);
   void tor_shutdown_event_loop_and_exit(int exitcode);
 }
@@ -36,6 +42,10 @@ bool onionpp::Tor::start(const bool i_Wait) {
 
 void onionpp::Tor::stop() {
   tor_shutdown_event_loop_and_exit(0);
+  pthread_join(m_Thread, nullptr);
+}
+
+void onionpp::Tor::join() {
   pthread_join(m_Thread, nullptr);
 }
 
