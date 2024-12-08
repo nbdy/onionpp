@@ -10,7 +10,7 @@
 
 bool bRun = true;
 
-void handler(int _) {
+void handler(int) {
   bRun = false;
 }
 
@@ -28,11 +28,11 @@ int main(int argc, char** argv) {
   CLI::App app {"Tor++"};
   argv = app.ensure_utf8(argv);
 
-  bool enableControlPortAuthentication = true;
+  bool disableCookieAuthentication = false;
   std::string controlPortPassword = "changeme";
 
-  app.add_option("-cpp,--control-port-password", controlPortPassword, "The password used for control port authentication");
-  app.add_flag("-dcpa,--disable-control-port-authentication", enableControlPortAuthentication, "Disable control port authentication");
+  app.add_option("--cookie", controlPortPassword, "Password used for the control port");
+  app.add_flag("--cookie-authentication", disableCookieAuthentication, "Disable control port authentication");
 
   CLI11_PARSE(app, argc, argv);
 
@@ -41,8 +41,8 @@ int main(int argc, char** argv) {
 
   const auto cfg = std::make_shared<onionpp::Configuration>();
   cfg->setOption(onionpp::Option::ControlPort, "1");
-  cfg->setOption(onionpp::Option::ControlPortHashedPassword, enableControlPortAuthentication ? "1" : "0");
-  if (enableControlPortAuthentication) {
+  cfg->setOption(onionpp::Option::CookieAuthentication, disableCookieAuthentication ? "0" : "1");
+  if (disableCookieAuthentication == false) {
     cfg->setOption(onionpp::Option::HashedControlPassword, hashedPassword);
   }
 
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 
   onionpp::Tor tor(cfg);
   std::cout << "Tor is running now and can be controlled via the control port." << std::endl;
-  tor.join();
+  tor.start(true);
 
   return 0;
 }
