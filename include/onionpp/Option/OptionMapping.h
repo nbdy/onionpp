@@ -5,47 +5,140 @@
 #ifndef OPTIONMAPPING_H
 #define OPTIONMAPPING_H
 
-#include <array>
+#include <string_view>
 
 #include "Option.h"
 
 namespace onionpp {
 struct ConfigOptionMapping {
-  Option m_Option;
-  const char* m_EnvironmentVariable;
-  const char* m_TorOption;
+  Option ConfigOption;
+  std::string_view EnvVar;
+  std::string_view ArgVar;
+  std::string_view DefaultValue;
+  std::string_view Description;
 };
 
-static constexpr std::array<ConfigOptionMapping, 23> getOptionMapping() {
-  return {
-    {
-      {Option::SOCKSPort, "TOR_SOCKS_PORT", "--SOCKSPort"},
-      {Option::DataDirectory, "TOR_DATA_DIRECTORY", "--DataDirectory"},
-      {Option::ControlPort, "TOR_CONTROL_PORT", "--ControlPort"},
-      {Option::HashedControlPassword, "TOR_HASHED_CONTROL_PASSWORD", "--HashedControlPassword"},
-      {Option::CookieAuthentication, "TOR_COOKIE_AUTHENTICATION", "--CookieAuthentication"},
-      {Option::HiddenServiceDir, "TOR_HIDDEN_SERVICE_DIR", "--HiddenServiceDir"},
-      {Option::HiddenServicePort, "TOR_HIDDEN_SERVICE_PORT", "--HiddenServicePort"},
-      {Option::ORPort, "TOR_ORPORT", "--ORPort"},
-      {Option::Address, "TOR_ADDRESS", "--Address"},
-      {Option::OutboundBindAddress, "TOR_OUTBOUND_BIND_ADDRESS", "--OutboundBindAddress"},
-      {Option::Nickname, "TOR_NICKNAME", "--Nickname"},
-      {Option::RelayBandwidthRate, "TOR_RELAY_BANDWIDTH_RATE", "--RelayBandwidthRate"},
-      {Option::RelayBandwidthBurst, "TOR_RELAY_BANDWIDTH_BURST", "--RelayBandwidthBurst"},
-      {Option::AccountingMax, "TOR_ACCOUNTING_MAX", "--AccountingMax"},
-      {Option::AccountingRule, "TOR_ACCOUNTING_RULE", "--AccountingRule"},
-      {Option::AccountingStart, "TOR_ACCOUNTING_START", "--AccountingStart"},
-      {Option::ContactInfo, "TOR_CONTACT_INFO", "--ContactInfo"},
-      {Option::DirPort, "TOR_DIR_PORT", "--DirPort"},
-      {Option::DirPortFrontPage, "TOR_DIR_PORT_FRONT_PAGE", "--DirPortFrontPage"},
-      {Option::MyFamily, "TOR_MY_FAMILY", "--MyFamily"},
-      {Option::ExitPolicy, "TOR_EXIT_POLICY", "--ExitPolicy"},
-      {Option::BridgeRelay, "TOR_BRIDGE_RELAY", "--BridgeRelay"},
-      {Option::PublishServerDescriptor, "TOR_PUBLISH_SERVER_DESCRIPTOR", "--PublishServerDescriptor"}
-    }
-  };
-}
-static constexpr auto OptionMapping = getOptionMapping();
-}
+static constexpr ConfigOptionMapping OptionMapping[] = {
+    {Option::SOCKSPort,
+     "TOR_SOCKS_PORT",
+     "--SOCKSPort",
+     "9050",
+     "Tor SOCKS proxy port"},
+    {Option::SOCKSPolicy,
+     "TOR_SOCKS_POLICY",
+     "--SOCKSPolicy",
+     "",
+     "Entry policies to allow/deny SOCKS requests based on IP address"},
+    {Option::DataDirectory,
+     "TOR_DATA_DIRECTORY",
+     "--DataDirectory",
+     "",
+     "The directory for keeping all the keys/etc"},
+    {Option::ControlPort,
+     "TOR_CONTROL_PORT",
+     "--ControlPort",
+     "9051",
+     "Port for tor controllers"},
+    {Option::HashedControlPassword,
+     "TOR_HASHED_CONTROL_PASSWORD",
+     "--HashedControlPassword",
+     "",
+     "Control port password"},
+    {Option::CookieAuthentication,
+     "TOR_COOKIE_AUTHENTICATION",
+     "--CookieAuthentication",
+     "",
+     "Enable cookie authentication"},
+    {Option::HiddenServiceDir,
+     "TOR_HIDDEN_SERVICE_DIR",
+     "--HiddenServiceDir",
+     "",
+     "Directory for hidden service"},
+    {Option::HiddenServicePort,
+     "TOR_HIDDEN_SERVICE_PORT",
+     "--HiddenServicePort",
+     "",
+     "Hidden service port mapping"},
+    {Option::ORPort,
+     "TOR_ORPORT",
+     "--ORPort",
+     "",
+     "What port to advertise for incoming Tor connections."},
+    {Option::Address,
+     "TOR_ADDRESS",
+     "--Address",
+     "",
+     "The IP address or full DNS name for incoming connections to your relay"},
+    {Option::OutboundBindAddress,
+     "TOR_OUTBOUND_BIND_ADDRESS",
+     "--OutboundBindAddress",
+     "",
+     "If you have multiple network interfaces, you can specify one for outgoing traffic to use."},
+    {Option::Nickname,
+     "TOR_NICKNAME",
+     "--Nickname",
+     "",
+     "A handle for your relay, so people don't have to refer to it by key."},
+    {Option::RelayBandwidthRate,
+     "TOR_RELAY_BANDWIDTH_RATE",
+     "--RelayBandwidthRate",
+     "",
+     "RelayBandwidthRate must be at least 20 kilobytes per second"},
+    {Option::RelayBandwidthBurst,
+     "TOR_RELAY_BANDWIDTH_BURST",
+     "--RelayBandwidthBurst",
+     "",
+     "Allow bursts up to throughput X"},
+    {Option::AccountingMax,
+     "TOR_ACCOUNTING_MAX",
+     "--AccountingMax",
+     "",
+     "Max throughput per AccountingStart"},
+    {Option::AccountingRule,
+     "TOR_ACCOUNTING_RULE",
+     "--AccountingRule",
+     "",
+     "sum"},
+    {Option::AccountingStart,
+     "TOR_ACCOUNTING_START",
+     "--AccountingStart",
+     "",
+     "day, week or month"},
+    {Option::ContactInfo,
+     "TOR_CONTACT_INFO",
+     "--ContactInfo",
+     "",
+     "Administrative contact information for this relay or bridge"},
+    {Option::DirPort,
+     "TOR_DIR_PORT",
+     "--DirPort",
+     "",
+     "Mirror directory information for others."},
+    {Option::DirPortFrontPage,
+     "TOR_DIR_PORT_FRONT_PAGE",
+     "--DirPortFrontPage",
+     "",
+     "Path to arbitrary blob of html on your DirPort"},
+    {Option::MyFamily,
+     "TOR_MY_FAMILY",
+     "--MyFamily",
+     "",
+     ""},
+    {Option::ExitPolicy,
+     "TOR_EXIT_POLICY",
+     "--ExitPolicy",
+     "",
+     "Comma-separated list of exit policies"},
+    {Option::BridgeRelay,
+     "TOR_BRIDGE_RELAY",
+     "--BridgeRelay",
+     "",
+     "Don't list in main directory"},
+    {Option::PublishServerDescriptor,
+     "TOR_PUBLISH_SERVER_DESCRIPTOR",
+     "--PublishServerDescriptor",
+     "",
+     "Advertise your bridge to users"}};
+}// namespace onionpp
 
-#endif //OPTIONMAPPING_H
+#endif//OPTIONMAPPING_H
