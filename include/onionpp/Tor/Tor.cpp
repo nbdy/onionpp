@@ -73,9 +73,9 @@ void *onionpp::Tor::_start(void *i_Tor) {
 
   for (const auto& [key, value] : tor->getConfiguration()->getOptions()) {
     const auto it = std::ranges::find_if(OptionMapping,
-                           [key](const ConfigOptionMapping& mapping) { return mapping.m_Option == key; });
+                           [key](const ConfigOptionMapping& mapping) { return mapping.Option == key; });
     if (it != std::end(OptionMapping)) {
-      strArgs.emplace_back(it->m_TorOption);
+      strArgs.emplace_back(it->ArgVar);
       strArgs.push_back(value);
     }
   }

@@ -8,8 +8,8 @@
 
 void onionpp::Configuration::parseEnvironment() {
   for (const auto& mapping: OptionMapping) {
-    if (const char* value = std::getenv(mapping.m_EnvironmentVariable)) {
-      m_OptionMap[mapping.m_Option] = value;
+    if (const char* value = std::getenv(mapping.EnvVar)) {
+      m_OptionMap[mapping.Option] = value;
     }
   }
 }
