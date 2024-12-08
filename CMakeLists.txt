@@ -12,7 +12,6 @@ include(cmake/SetVariables.cmake)
 include(cmake/SetToolchain.cmake)
 include(cmake/Build.cmake)
 
-# unset options
 foreach(option ${OPTION_LIST})
     unset(${option} CACHE)
 endforeach()
