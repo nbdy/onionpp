@@ -1,19 +1,10 @@
 #!/bin/bash
 
-mkdir -p build-default
-cd build-default
-cmake .. -DCMAKE_BUILD_TYPE=Relase
-make -j$(nproc)
-cd ..
+# TODO: Iterate over list of all available images?
+# https://github.com/dockcross/dockcross#summary-cross-compilers
 
-mkdir -p build-windows
-cd build-windows
-cmake .. -DCMAKE_BUILD_TYPE=Relase -DWINDOWS=ON
-make -j$(nproc)
-cd ..
+./cross-build.sh linux-x64
+./cross-build.sh linux-x86
 
-mkdir -p build-windows-x86_64
-cd build-windows
-cmake .. -DCMAKE_BUILD_TYPE=Relase -DWINDOWS=ON -Dx86_64
-make -j$(nproc)
-cd ..
+./cross-build.sh windows-static-x64
+./cross-build.sh windows-static-x86
