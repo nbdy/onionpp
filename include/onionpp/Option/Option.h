@@ -7,11 +7,11 @@
 
 #include <unordered_map>
 #include <string>
-#include <array>
 
 namespace onionpp {
 enum class Option {
   SOCKSPort,
+  SOCKSPolicy,
   DataDirectory,
   ControlPort,
   HashedControlPassword,
