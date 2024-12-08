@@ -22,10 +22,7 @@ embed tor in your application
 
 - [X] start tor
   - [X] with inline configuration
-
-- Size of onionpp_test build for
-  - windows/i686: 10MB
-  - linux/amd64: 8MB
+  - [X] with environment variables
 
 ## usage
 
@@ -34,6 +31,9 @@ embed tor in your application
 
 int main() {
   onionpp::Tor tor;
+  tor.start(true); // true to wait until tor has bootstrapped
+  // else you can pass false and check via
+  // tor.isBootstrapped or tor.getBootstrapPercentage
 
   // use the tor socks port
   return 0;
@@ -43,3 +43,10 @@ int main() {
 ## bindings
 
 - [X] [python](https://github.com/nbdy/onionpy)
+
+## size table
+
+| Name        | Size   |
+|-------------|--------|
+| linux/amd64 | 5.4 MB |
+| TBD         | TBD    |
