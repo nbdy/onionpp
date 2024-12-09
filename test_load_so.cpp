@@ -6,18 +6,18 @@
 #include <dlfcn.h>
 #include <iostream>
 
-#include "onionpp/onionpp.h"
+#include "onionpp/Tor/ITor.h"
 
 typedef onionpp::ITor* (*TorFactory)();
 
 int main() {
   std::cout << "Current path: " << std::filesystem::current_path() << std::endl;
-  const auto path = std::filesystem::current_path() / "libonionpp.so";
+  const auto path = std::filesystem::current_path() / "libonionpp-shared.so";
   std::cout << "Loading library: " << path.c_str() << std::endl;
   void *handle = dlopen(path.c_str(), RTLD_LAZY);
   if (handle == nullptr) {
     std::cout << "Could not load library: " << dlerror() << std::endl;
-    return 0;
+    return 1;
   }
   std::cout << "Loading create_tor symbol" << std::endl;
   const auto factory = reinterpret_cast<TorFactory>(dlsym(handle, "create_tor"));

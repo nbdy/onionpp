@@ -4,6 +4,9 @@
 
 #include "onionpp.h"
 
+#include "Tor/ITor.h"
+#include "Tor/Tor.h"
+
 extern "C" {
 #ifdef _WIN32
   typedef int SOCKET;
@@ -33,4 +36,8 @@ const char* onionpp::getVersion() {
 
 const char *onionpp::getTorVersion() {
   return tor_api_get_provider_version();
+}
+
+extern "C" onionpp::ITor* create_tor() {
+  return new onionpp::Tor();
 }
