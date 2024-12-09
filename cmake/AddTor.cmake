@@ -43,20 +43,7 @@ ExternalProject_Add(ext_tor
 ExternalProject_Get_Property(ext_tor SOURCE_DIR)
 set(TOR_SOURCE_PATH ${SOURCE_DIR})
 set(TOR_LINK_LIBRARIES
-        -L${TOR_SOURCE_PATH}/core tor-app
-
-        -L${TOR_SOURCE_PATH}/lib
-        tor-compress tor-evloop tor-tls tor-crypt-ops curve25519_donna
-        tor-geoip tor-time tor-fs tor-encoding tor-sandbox tor-net tor-memarea
-        tor-math tor-meminfo tor-osinfo tor-log tor-lock tor-fdio tor-string
-        tor-term tor-smartlist-core tor-malloc tor-wallclock tor-err tor-intmath
-        tor-ctime tor-trace tor-buf tor-confmgt tor-pubsub tor-metrics tor-dispatch
-        tor-version tor-thread tor-container tor-process tor-llharden
-
-        -L${TOR_SOURCE_PATH}/ext/keccak-tiny keccak-tiny
-        -L${TOR_SOURCE_PATH}/ext/ed25519/ref10 ed25519_ref10
-        -L${TOR_SOURCE_PATH}/ext/ed25519/donna ed25519_donna
-        -L${TOR_SOURCE_PATH}/trunnel or-trunnel
+        -L${TOR_SOURCE_PATH} tor
 
         ${OPENSSL_LINK_LIBRARIES}
         ${LIBEVENT_LINK_LIBRARIES}
