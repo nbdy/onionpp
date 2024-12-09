@@ -23,7 +23,7 @@ install(TARGETS onionpp-static onionpp-shared LIBRARY DESTINATION lib)
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION include)
 
 if(WINDOWS)
-    set(ONIONPP_LINK_LIBRARIES ${TOR_LINK_LIBRARIES} -static -static-libgcc ws2_32 crypt32 shlwapi iphlpapi gdi32 pthread)
+    set(ONIONPP_LINK_LIBRARIES ${TOR_LINK_LIBRARIES} pthread -static -static-libgcc ws2_32 crypt32 shlwapi iphlpapi gdi32)
 else ()
     set(ONIONPP_LINK_LIBRARIES ${TOR_LINK_LIBRARIES} pthread m dl)
 endif ()
