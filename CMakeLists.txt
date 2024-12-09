@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.15...3.26)
 project(onionpp LANGUAGES CXX VERSION 1.0.0)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 option(WINDOWS "Build for windows" OFF)
 option(x86_64 "Build for x86_64" OFF)
 option(TORPP "Build tor++" ON)
