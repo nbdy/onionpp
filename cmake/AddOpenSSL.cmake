@@ -13,9 +13,9 @@ message("OpenSSL configure prefix: ${CONFIGURE_PREFIX}")
 
 set(OPENSSL_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/openssl/bin)
 
-ExternalProject_Add(openssl
+ExternalProject_Add(ext_openssl
         PREFIX openssl
-        DEPENDS zlib
+        DEPENDS ext_zlib
         GIT_REPOSITORY https://github.com/openssl/openssl
         GIT_PROGRESS 1
         GIT_TAG OpenSSL_1_0_2j
@@ -31,7 +31,7 @@ ExternalProject_Add(openssl
         INSTALL_COMMAND make install
 )
 
-ExternalProject_Get_Property(openssl SOURCE_DIR)
+ExternalProject_Get_Property(ext_openssl SOURCE_DIR)
 set(OPENSSL_SOURCE_PATH ${SOURCE_DIR}/src)
 include_directories(${OPENSSL_SOURCE_PATH})
 set(SSL_LIBRARY_PATH "${OPENSSL_BINARY_DIR}/lib/libssl.a")

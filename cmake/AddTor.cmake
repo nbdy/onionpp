@@ -4,9 +4,9 @@ include(cmake/AddLibEvent.cmake)
 
 set(TOR_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/tor/bin/)
 
-ExternalProject_Add(tor
+ExternalProject_Add(ext_tor
         PREFIX tor
-        DEPENDS openssl libevent zlib
+        DEPENDS ext_openssl ext_libevent ext_zlib
         GIT_REPOSITORY https://git.torproject.org/tor.git
         GIT_PROGRESS 1
         GIT_SUBMODULES ""
@@ -40,8 +40,8 @@ ExternalProject_Add(tor
         INSTALL_COMMAND make install
 )
 
-ExternalProject_Get_Property(tor SOURCE_DIR)
-set(TOR_SOURCE_PATH ${SOURCE_DIR}/src)
+ExternalProject_Get_Property(ext_tor SOURCE_DIR)
+set(TOR_SOURCE_PATH ${SOURCE_DIR})
 set(TOR_LINK_LIBRARIES
         -L${TOR_SOURCE_PATH}/core tor-app
 

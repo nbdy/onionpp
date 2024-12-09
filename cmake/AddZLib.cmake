@@ -8,7 +8,7 @@ else()
     set(MAKE_ARGS "-j${CMAKE_BUILD_PARALLEL_LEVEL}")
 endif()
 
-ExternalProject_Add(zlib
+ExternalProject_Add(ext_zlib
         PREFIX zlib
         GIT_REPOSITORY https://github.com/madler/zlib
         GIT_PROGRESS 1
@@ -20,7 +20,7 @@ ExternalProject_Add(zlib
         INSTALL_COMMAND make install
 )
 
-ExternalProject_Get_Property(zlib SOURCE_DIR)
+ExternalProject_Get_Property(ext_zlib SOURCE_DIR)
 set(ZLIB_SOURCE_PATH ${SOURCE_DIR}/src)
 include_directories(${ZLIB_SOURCE_PATH})
 set(ZLIB_LIBRARY_PATH ${ZLIB_BINARY_DIR}/lib/libz.a)

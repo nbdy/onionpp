@@ -9,8 +9,7 @@ file(GLOB_RECURSE ONIONPP_SOURCES
 add_library(onionpp OBJECT ${ONIONPP_SOURCES})
 set_target_properties(onionpp PROPERTIES POSITION_INDEPENDENT_CODE 1)
 target_compile_definitions(onionpp PUBLIC ONIONPP_VERSION="${PROJECT_VERSION}")
-target_include_directories(onionpp PUBLIC ${TOR_SOURCE_PATH})
-add_dependencies(onionpp tor)
+add_dependencies(onionpp ext_tor)
 
 add_library(onionpp-shared SHARED $<TARGET_OBJECTS:onionpp>)
 set_target_properties(onionpp-shared PROPERTIES LINKER_LANGUAGE CXX)
