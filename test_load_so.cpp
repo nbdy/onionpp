@@ -42,12 +42,13 @@ int main() {
 
   std::cout << "Loading create_tor symbol" << std::endl;
 #ifdef _WIN32
-  auto factory = reinterpret_cast<TorFactory>(GetProcAddress(handle, "create_tor"));
-  if (factory == nullptr) {
+  const auto proc = GetProcAddress(handle, "create_tor");
+  if (proc == nullptr) {
     std::cerr << "Could not load symbol: " << GetLastError() << std::endl;
     FreeLibrary(handle);
     return 1;
   }
+  auto factory = reinterpret_cast<TorFactory>(reinterpret_cast<void*>(proc));
 #else
   auto factory = reinterpret_cast<TorFactory>(dlsym(handle, "create_tor"));
   if (factory == nullptr) {
