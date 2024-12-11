@@ -7,20 +7,6 @@
 
 embed tor in your application
 
-## requirements
-
-### linux
-
-- libevent-dev
-- liblzma-dev
-- libssl-dev
-- zlib1g-dev
-
-### windows
-
-- all the linux dependencies
-- mingw
-
 ## features
 
 - [X] start tor
