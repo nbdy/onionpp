@@ -7,7 +7,7 @@ if(OPENSSL_CONFIGURE_PREFIX STREQUAL "")
     if(TOOLCHAIN MATCHES "mingw")
         set(OPENSSL_CONFIGURE_PREFIX mingw64)
     else()
-        set(OPENSSL_CONFIGURE_PREFIX linux-x86_64)
+        set(OPENSSL_CONFIGURE_PREFIX linux-generic64)
     endif()
 endif ()
 
