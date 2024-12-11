@@ -38,7 +38,7 @@ ExternalProject_Add(ext_openssl
         -static -static-libgcc \
         -fPIC \
         "
-        BUILD_COMMAND make #-j${CMAKE_BUILD_PARALLEL_LEVEL}
+        BUILD_COMMAND make -j1
         INSTALL_COMMAND make install
 )
 
