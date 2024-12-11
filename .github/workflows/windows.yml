@@ -8,25 +8,24 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
+      - name: Install MinGW
         run: |
-          choco install cmake --installargs '"ADD_CMAKE_TO_PATH=System"' -y
-          choco install visualstudio2022buildtools -y
-          choco install visualstudio2022-workload-vctools -y
+          sudo apt-get update
+          sudo apt-get install -y mingw-w64
+
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Create build directory
         run: mkdir build
 
       - name: Configure CMake
         working-directory: build
-        run: cmake .. -G "Visual Studio 17 2022" -A x64
+        run: cmake .. -DCMAKE_SYSTEM_NAME=Windows
 
-      - name: Build the project
+      - name: Build
         working-directory: build
         run: cmake --build . --config Release
