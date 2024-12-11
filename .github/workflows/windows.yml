@@ -24,8 +24,20 @@ jobs:
 
       - name: Configure CMake
         working-directory: build
-        run: cmake .. -DCMAKE_SYSTEM_NAME=Windows
+        run: cmake .. -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain/windows.cmake
 
       - name: Build
         working-directory: build
         run: cmake --build . --config Release
+
+      - name: Upload torpp artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: torpp.exe
+          path: build/
+
+      - name: Upload libonionpp-static artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: libonionpp-static.a
+          path: build/
