@@ -12,15 +12,16 @@ ExternalProject_Add(ext_libevent
         GIT_TAG release-2.1.12-stable
         UPDATE_DISCONNECTED 1
         BUILD_IN_SOURCE 1
-        CONFIGURE_COMMAND ./autogen.sh && ./configure
-        --disable-samples
-        --disable-libevent-regress
-        --enable-openssl
-        --with-openssl-dir=${OPENSSL_BINARY_DIR}
-        --prefix=${LIBEVENT_BINARY_DIR}
-        --host=${TOOLCHAIN}
+        CONFIGURE_COMMAND bash -c "./autogen.sh && \
+        CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER} AR=${CMAKE_AR} \
+        RANLIB=${CMAKE_RANLIB} STRIP=${CMAKE_STRIP} NM=${CMAKE_NM} \
+        CFLAGS='-I${ZLIB_INCLUDE_DIRECTORY} -I${OPENSSL_INCLUDE_DIRECTORY}' \
+        LDFLAGS='-L${ZLIB_LIBRARY_DIRECTORY} -L${OPENSSL_LIBRARY_DIRECTORY}' \
+        ./configure --disable-samples --disable-libevent-regress \
+        --enable-openssl --prefix=${LIBEVENT_BINARY_DIR} --host=${TOOLCHAIN}"
         BUILD_COMMAND make -j${CMAKE_BUILD_PARALLEL_LEVEL}
         INSTALL_COMMAND make install
+        UPDATE_COMMAND ./autogen.sh
 )
 
 ExternalProject_Get_Property(ext_libevent SOURCE_DIR)

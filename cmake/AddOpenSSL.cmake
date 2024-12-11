@@ -2,14 +2,16 @@ include(ExternalProject)
 
 include(cmake/AddZLib.cmake)
 
-if(${TOOLCHAIN_PREFIX} MATCHES "mingw32-$")
-    set(CONFIGURE_PREFIX -m32 mingw)
-elseif(${TOOLCHAIN_PREFIX} MATCHES "mingw64-$")
-    set(CONFIGURE_PREFIX mingw64)
-else()
-    set(CONFIGURE_PREFIX linux-elf)
-endif()
-message("OpenSSL configure prefix: ${CONFIGURE_PREFIX}")
+set(OPENSSL_CONFIGURE_PREFIX "")
+if(OPENSSL_CONFIGURE_PREFIX STREQUAL "")
+    if(TOOLCHAIN MATCHES "mingw")
+        set(OPENSSL_CONFIGURE_PREFIX mingw64)
+    else()
+        set(OPENSSL_CONFIGURE_PREFIX linux-x86_64)
+    endif()
+endif ()
+
+message("OpenSSL configure prefix: ${OPENSSL_CONFIGURE_PREFIX}")
 
 set(OPENSSL_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/openssl/bin)
 
@@ -22,12 +24,21 @@ ExternalProject_Add(ext_openssl
         GIT_SUBMODULES ""
         UPDATE_DISCONNECTED 1
         BUILD_IN_SOURCE 1
-        CONFIGURE_COMMAND
-        ./Configure ${CONFIGURE_PREFIX} threads no-shared no-asm no-tests
-        --cross-compile-prefix=${TOOLCHAIN_PREFIX}
-        --prefix=${OPENSSL_BINARY_DIR}
-        -static -static-libgcc -fPIC
-        BUILD_COMMAND make clean && make
+        CONFIGURE_COMMAND bash -c "
+        CC=${CMAKE_C_COMPILER} \
+        CXX=${CMAKE_CXX_COMPILER} \
+        AR=${CMAKE_AR} \
+        RANLIB=${CMAKE_RANLIB} \
+        STRIP=${CMAKE_STRIP} \
+        NM=${CMAKE_NM} \
+        ./Configure ${OPENSSL_CONFIGURE_PREFIX} threads no-shared no-asm no-tests \
+        --with-zlib-include=${ZLIB_BINARY_DIR}/include \
+        --with-zlib-lib=${ZLIB_BINARY_DIR}/lib \
+        --prefix=${OPENSSL_BINARY_DIR} \
+        -static -static-libgcc \
+        -fPIC \
+        "
+        BUILD_COMMAND make -j${CMAKE_BUILD_PARALLEL_LEVEL}
         INSTALL_COMMAND make install
 )
 
@@ -37,4 +48,5 @@ include_directories(${OPENSSL_SOURCE_PATH})
 set(SSL_LIBRARY_PATH "${OPENSSL_BINARY_DIR}/lib/libssl.a")
 set(CRYPTO_LIBRARY_PATH "${OPENSSL_BINARY_DIR}/lib/libcrypto.a")
 set(OPENSSL_LIBRARY_DIRECTORY "${OPENSSL_BINARY_DIR}/lib")
+set(OPENSSL_INCLUDE_DIRECTORY "${OPENSSL_BINARY_DIR}/include")
 set(OPENSSL_LINK_LIBRARIES -L${OPENSSL_LIBRARY_DIRECTORY} ssl crypto)
