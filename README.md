@@ -3,7 +3,7 @@
 | Status                                                                              |
 |-------------------------------------------------------------------------------------|
 | ![Linux](https://github.com/nbdy/onionpp/actions/workflows/linux.yml/badge.svg)     |
-| ![Windows](https://github.com/example/repo/actions/workflows/windows.yml/badge.svg) |
+| ![Windows](https://github.com/nbdy/onionpp/actions/workflows/windows.yml/badge.svg) |
 
 embed tor in your application
 
