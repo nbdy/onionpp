@@ -43,10 +43,3 @@ int main() {
 ## bindings
 
 - [X] [python](https://github.com/nbdy/onionpy)
-
-## size table
-
-| Name        | Size   |
-|-------------|--------|
-| linux/amd64 | 5.4 MB |
-| TBD         | TBD    |
