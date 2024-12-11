@@ -26,7 +26,7 @@ void onionpp::Configuration::parseEnvironment() {
   }
 }
 
-void onionpp::Configuration::parseArguments(const int argc, char** argv) {
+void onionpp::Configuration::parseArguments(const uint32_t argc, char** argv) {
   for (uint32_t idx = 0; idx < argc; idx++) {
     auto arg = std::string(argv[idx]);
     for (const auto& mapping : OptionMapping) {

@@ -16,7 +16,7 @@ class Configuration final : public IConfiguration {
   protected:
   void setDefaults();
   void parseEnvironment();
-  void parseArguments(int argc, char** argv);
+  void parseArguments(uint32_t argc, char** argv);
 
   public:
   /*!
