@@ -16,6 +16,7 @@ ExternalProject_Add(ext_zlib
         RANLIB=${CMAKE_RANLIB} \
         STRIP=${CMAKE_STRIP} \
         NM=${CMAKE_NM} \
+        CFLAGS='-fPIC' \
         ./configure \
         --prefix=${ZLIB_BINARY_DIR} \
         --static"
