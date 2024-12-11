@@ -8,11 +8,12 @@
 #include "ITor.h"
 #include "onionpp/Configuration/IConfiguration.h"
 
+#include <thread>
 #include <memory>
 
 namespace onionpp {
 class Tor final : public ITor {
-  pthread_t m_Thread{};
+  std::thread m_Thread{};
   IConfigurationPtr m_Configuration;
 
  public:
@@ -29,7 +30,7 @@ class Tor final : public ITor {
   IConfigurationPtr getConfiguration() override;
 
  protected:
-  static void* _start(void* i_Tor);
+  static void _start(Tor *i_Tor);
 };
 }// namespace onionpp
 

@@ -4,6 +4,7 @@
 
 #include <utility>
 #include <vector>
+#include <chrono>
 #include <bits/ranges_util.h>
 
 #include "Tor.h"
@@ -35,18 +36,18 @@ onionpp::Tor::~Tor() {
 }
 
 bool onionpp::Tor::start(const bool i_Wait) {
-  pthread_create(&m_Thread, nullptr, &Tor::_start, this);
+  m_Thread = std::thread(&_start, this);
   if (i_Wait) { waitUntilBootstrapped(); }
   return true;
 }
 
 void onionpp::Tor::stop() {
   tor_shutdown_event_loop_and_exit(0);
-  pthread_join(m_Thread, nullptr);
+  join();
 }
 
 void onionpp::Tor::join() {
-  pthread_join(m_Thread, nullptr);
+  if (m_Thread.joinable()) { m_Thread.join(); }
 }
 
 bool onionpp::Tor::isBootstrapped() {
@@ -54,7 +55,7 @@ bool onionpp::Tor::isBootstrapped() {
 }
 
 void onionpp::Tor::waitUntilBootstrapped() {
-  while (isBootstrapped() == false) { sleep(1); }
+  while (isBootstrapped() == false) { std::this_thread::sleep_for(std::chrono::milliseconds(100)); }
 }
 
 uint8_t onionpp::Tor::getBootstrapPercentage() {
@@ -65,13 +66,12 @@ onionpp::IConfigurationPtr onionpp::Tor::getConfiguration() {
   return m_Configuration;
 }
 
-void *onionpp::Tor::_start(void *i_Tor) {
-  const auto tor = static_cast<Tor*>(i_Tor);
+void onionpp::Tor::_start(Tor *i_Tor) {
   tor_main_configuration_t *tor_cfg = tor_main_configuration_new();
   std::vector<std::string> strArgs;
   strArgs.emplace_back("tor");
 
-  for (const auto& [key, value] : tor->getConfiguration()->getOptions()) {
+  for (const auto& [key, value] : i_Tor->getConfiguration()->getOptions()) {
     const auto it = std::ranges::find_if(OptionMapping,
                            [key](const ConfigOptionMapping& mapping) { return mapping.ConfigOption == key; });
     if (it != std::end(OptionMapping)) {
@@ -95,6 +95,4 @@ void *onionpp::Tor::_start(void *i_Tor) {
 
   tor_run_main(tor_cfg);
   tor_main_configuration_free(tor_cfg);
-
-  return nullptr;
 }
