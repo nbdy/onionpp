@@ -47,6 +47,12 @@ jobs:
           name: torpp.exe
           path: build/torpp.exe
 
+      - name: Upload libonionpp-shared artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: libonionpp-shared.so
+          path: build/libonionpp-shared.so
+
       - name: Upload libonionpp-static artifact
         uses: actions/upload-artifact@v4
         with:
