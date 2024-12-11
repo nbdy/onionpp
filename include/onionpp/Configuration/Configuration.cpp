@@ -8,6 +8,16 @@
 
 #include "onionpp/Option/OptionMapping.h"
 
+#include <iostream>
+
+void onionpp::Configuration::setDefaults() {
+  for (const auto& mapping : OptionMapping) {
+    if (mapping.DefaultValue.empty() == false) {
+      m_OptionMap[mapping.ConfigOption] = mapping.DefaultValue;
+    }
+  }
+}
+
 void onionpp::Configuration::parseEnvironment() {
   for (const auto& mapping: OptionMapping) {
     if (const char* value = std::getenv(mapping.EnvVar.data())) {
@@ -16,16 +26,39 @@ void onionpp::Configuration::parseEnvironment() {
   }
 }
 
+void onionpp::Configuration::parseArguments(const int argc, char** argv) {
+  for (uint32_t idx = 0; idx < argc; idx++) {
+    auto arg = std::string(argv[idx]);
+    for (const auto& mapping : OptionMapping) {
+      if (arg == mapping.ArgVar) {
+        if (const auto valIdx = idx + 1; argc >= valIdx) {
+          m_OptionMap[mapping.ConfigOption] = std::string(argv[valIdx]);
+        } else {
+          std::cout << "No value specified for '" << arg << "'!" << std::endl;
+        }
+      }
+    }
+  }
+}
+
 onionpp::Configuration::Configuration() {
+  setDefaults();
   parseEnvironment();
 }
 
 onionpp::Configuration::Configuration(const uint16_t i_Socks5Port) {
+  setDefaults();
   parseEnvironment();
   m_OptionMap[Option::SOCKSPort] = std::to_string(i_Socks5Port);
 }
 
-onionpp::Configuration::Configuration(ConfigOptionMap  i_ConfigOptionMap): m_OptionMap(std::move(i_ConfigOptionMap)) {}
+onionpp::Configuration::Configuration(ConfigOptionMap i_ConfigOptionMap) : m_OptionMap(std::move(i_ConfigOptionMap)) {}
+
+onionpp::Configuration::Configuration(int argc, char** argv) {
+  setDefaults();
+  parseEnvironment();
+  parseArguments(argc, argv);
+}
 
 onionpp::ConfigOptionMap onionpp::Configuration::getOptions() const {
   return m_OptionMap;

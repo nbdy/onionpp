@@ -14,22 +14,29 @@ class Configuration final : public IConfiguration {
   ConfigOptionMap m_OptionMap;
 
   protected:
+  void setDefaults();
   void parseEnvironment();
+  void parseArguments(int argc, char** argv);
 
   public:
   /*!
-  Parses environment variables
+   * Parses environment variables
    */
   Configuration();
   /*!
-  Parses environment variables and then sets socks port
+   * Parses environment variables and then sets socks port
    */
   explicit Configuration(uint16_t i_Socks5Port);
   /*!
-  Moves ConfigOptionMap to member variable.
-  Does NOT parse environment.
+   * Moves ConfigOptionMap to member variable.
+   * Does NOT parse environment.
    */
   explicit Configuration(ConfigOptionMap  i_ConfigOptionMap);
+
+  /*!
+   * First parses the environment, then argv
+   */
+  explicit Configuration(int argc, char** argv);
 
   ConfigOptionMap getOptions() const override;
 
