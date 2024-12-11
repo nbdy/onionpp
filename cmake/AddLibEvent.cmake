@@ -19,7 +19,7 @@ ExternalProject_Add(ext_libevent
         LDFLAGS='-L${ZLIB_LIBRARY_DIRECTORY} -L${OPENSSL_LIBRARY_DIRECTORY}' \
         ./configure --disable-samples --disable-libevent-regress \
         --enable-openssl --prefix=${LIBEVENT_BINARY_DIR} --host=${TOOLCHAIN}"
-        BUILD_COMMAND make -j${CMAKE_BUILD_PARALLEL_LEVEL}
+        BUILD_COMMAND make -j$(nproc)
         INSTALL_COMMAND make install
         UPDATE_COMMAND ./autogen.sh
 )
