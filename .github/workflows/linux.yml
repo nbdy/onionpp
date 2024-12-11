@@ -40,16 +40,16 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: torpp
-          path: build/
+          path: build/torpp
 
       - name: Upload libonionpp-shared artifact
         uses: actions/upload-artifact@v3
         with:
           name: libonionpp-shared.so
-          path: build/
+          path: build/libonionpp-shared.so
 
       - name: Upload libonionpp-static artifact
         uses: actions/upload-artifact@v3
         with:
           name: libonionpp-static.so
-          path: build/
+          path: build/libonionpp-static.so

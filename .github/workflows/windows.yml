@@ -40,10 +40,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: torpp.exe
-          path: build/
+          path: build/torpp.exe
 
       - name: Upload libonionpp-static artifact
         uses: actions/upload-artifact@v3
         with:
           name: libonionpp-static.a
-          path: build/
+          path: build/libonionpp-static.a
