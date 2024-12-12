@@ -20,7 +20,7 @@ ExternalProject_Add(ext_zlib
         ./configure \
         --prefix=${ZLIB_BINARY_DIR} \
         --static"
-        BUILD_COMMAND make -j${CMAKE_BUILD_PARALLEL_LEVEL}
+        BUILD_COMMAND make -j8
         INSTALL_COMMAND make install
 )
 

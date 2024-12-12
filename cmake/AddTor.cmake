@@ -44,7 +44,7 @@ ExternalProject_Add(ext_tor
         --enable-pic \
         --enable-static-tor \
         --prefix=${TOR_BINARY_DIR}"
-        BUILD_COMMAND make -j$(nproc)
+        BUILD_COMMAND make -j8
         INSTALL_COMMAND make install
 )
 
