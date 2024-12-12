@@ -8,8 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
-    timeout-minutes: 30
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Install MinGW
