@@ -3,6 +3,7 @@ project(onionpp LANGUAGES CXX VERSION 1.0.0)
 
 option(TORPP "Build tor++" ON)
 option(SO_TEST "Build .so load test" ON)
+option(PYTHON_BINDINGS "Build python bindings" ON)
 
 include(cmake/SetVariables.cmake)
 include(cmake/SetToolchain.cmake)

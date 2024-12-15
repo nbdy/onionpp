@@ -31,4 +31,6 @@ int main() {
 
 ## bindings
 
-- [X] [python](https://github.com/nbdy/onionpy)
+| Bindings / OS | Linux | Windows |
+|---------------|-------|---------|
+| Python        | X     | *       |
