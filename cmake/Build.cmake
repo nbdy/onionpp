@@ -52,38 +52,11 @@ if (SO_TEST)
 endif ()
 
 if (PYTHON_BINDINGS)
-    set(VENV_PATH "${CMAKE_SOURCE_DIR}/.venv")
-
     find_package(Python)
-    if (NOT EXISTS ${VENV_PATH})
-        message(STATUS "Creating python virtualenv")
-        execute_process(COMMAND ${Python_EXECUTABLE} "-m" "venv" ${VENV_PATH})
-    endif ()
-
-    set(ENV{VIRTUAL_ENV} ${VENV_PATH})
-    set(Python_FIND_VIRTUALENV FIRST)
-    unset (Python_EXECUTABLE)
-
-    find_package(Python)
-    message(STATUS "Found python: ${Python_EXECUTABLE}")
-
     include(cmake/AddPyBind11.cmake)
-
-    set(STUB_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/stubs)
-
     pybind11_add_module(onionpy bindings/python.cpp)
     target_include_directories(onionpy PUBLIC ${ONIONPP_INSTALL_DIR}/include)
     add_dependencies(onionpy onionpp-static)
     target_link_libraries(onionpy PRIVATE onionpp-static pybind11::pybind11)
     install(TARGETS onionpy DESTINATION ${Python_SITELIB})
-
-    add_custom_command(
-            OUTPUT ${STUB_OUTPUT_DIR}/onionpy-stubs
-            COMMAND ${Python_EXECUTABLE} -m pybind11_stubgen onionpy
-            COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/stubs ${CMAKE_CURRENT_BINARY_DIR}
-            DEPENDS onionpy
-            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    )
-    add_custom_target(onionpy-stubs ALL DEPENDS ${STUB_OUTPUT_DIR}/onionpy-stubs)
-    install(FILES ${STUB_OUTPUT_DIR}/onionpy.pyi DESTINATION ${Python_SITELIB})
 endif ()
