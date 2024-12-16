@@ -35,9 +35,9 @@ onionpp::Tor::~Tor() {
   stop();
 }
 
-bool onionpp::Tor::start(const bool i_Wait) {
+bool onionpp::Tor::start(const bool i_WaitUntilBootstrapped) {
   m_Thread = std::thread(&_start, this);
-  if (i_Wait) { waitUntilBootstrapped(); }
+  if (i_WaitUntilBootstrapped) { waitUntilBootstrapped(); }
   return true;
 }
 

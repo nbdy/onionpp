@@ -21,7 +21,7 @@ class Tor final : public ITor {
   explicit Tor(IConfigurationPtr  i_Configuration);
   ~Tor() override;
 
-  bool start(bool i_Wait) override;
+  bool start(bool i_WaitUntilBootstrapped) override;
   void stop() override;
   void join() override;
   bool isBootstrapped() override;
