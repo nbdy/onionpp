@@ -1,0 +1,26 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "onionpy"
+version = "1.0.0"
+requires-python = ">=3.8"
+description = "Tor C++ bindings for python"
+authors = [{ name = "Pascal Eberlein", email = "pascal@eberlein.io" }]
+license = { file = "LICENSE" }
+readme = "README.md"
+keywords = ["Tor", "C++", "C++ wrapper", "python bindings"]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: C++",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+
+[tool.setuptools]
+packages = ["onionpy"]
+
+[tool.setuptools.package-data]
+onionpy = ["py.typed"]
