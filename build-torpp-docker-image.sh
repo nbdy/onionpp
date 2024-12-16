@@ -3,6 +3,7 @@
 IMAGE_NAME="torpp"
 IMAGE_VERSION="latest"
 DOCKERFILE_PATH="."
+EXPORT_PATH="./torpp-image.tar"
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -16,6 +17,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -f|--dockerfile)
       DOCKERFILE_PATH="$2"
+      shift 2
+      ;;
+    -o|--output)
+      EXPORT_PATH="$2"
       shift 2
       ;;
     *)
@@ -34,10 +39,19 @@ else
   echo "Docker image '$FULL_IMAGE_NAME' does not exist. Building it now..."
   docker build -t "$FULL_IMAGE_NAME" "$DOCKERFILE_PATH"
 
-  if [ $? -eq 0 ]; then
-    echo "Docker image '$FULL_IMAGE_NAME' built successfully."
-  else
+  if [ $? -ne 0 ]; then
     echo "Failed to build Docker image '$FULL_IMAGE_NAME'. Check the Docker logs for more information."
     exit 1
   fi
+  echo "Docker image '$FULL_IMAGE_NAME' built successfully."
+fi
+
+echo "Exporting Docker image '$FULL_IMAGE_NAME' to '$EXPORT_PATH'..."
+docker save -o "$EXPORT_PATH" "$FULL_IMAGE_NAME"
+
+if [ $? -eq 0 ]; then
+  echo "Docker image '$FULL_IMAGE_NAME' exported successfully to '$EXPORT_PATH'."
+else
+  echo "Failed to export Docker image '$FULL_IMAGE_NAME'."
+  exit 1
 fi
