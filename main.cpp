@@ -31,6 +31,7 @@ int main(const int argc, char** argv) {
   onionpp::Tor tor(std::make_shared<onionpp::Configuration>(cfg));
   std::cout << "Tor is running now and can be controlled via the control port." << std::endl;
   tor.start(true);
+  tor.join();
 
   return 0;
 }
