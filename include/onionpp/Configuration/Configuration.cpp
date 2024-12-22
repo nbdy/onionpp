@@ -75,7 +75,7 @@ std::string onionpp::Configuration::getOption(const Option& i_Option) const {
 void onionpp::Configuration::setOption(const Option& i_Option, const std::string& i_Value) {
   switch (i_Option) {
     case Option::ControlPassword:
-      m_OptionMap[i_Option] = hashPassword(i_Value);
+      m_OptionMap[Option::HashedControlPassword] = hashPassword(i_Value);
       break;
     default:
       m_OptionMap[i_Option] = i_Value;
