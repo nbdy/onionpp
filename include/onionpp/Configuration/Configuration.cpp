@@ -55,7 +55,7 @@ onionpp::Configuration::Configuration(const uint16_t i_Socks5Port) {
 
 onionpp::Configuration::Configuration(ConfigOptionMap i_ConfigOptionMap) : m_OptionMap(std::move(i_ConfigOptionMap)) {}
 
-onionpp::Configuration::Configuration(int argc, char** argv) {
+onionpp::Configuration::Configuration(const int argc, char** argv) {
   setDefaults();
   parseEnvironment();
   parseArguments(argc, argv);
