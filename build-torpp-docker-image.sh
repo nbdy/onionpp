@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IMAGE_NAME="torpp"
-IMAGE_VERSION="1.0.1"
+IMAGE_VERSION="1.0.2"
 DOCKERFILE_PATH="."
 
 while [[ $# -gt 0 ]]; do
@@ -37,7 +37,7 @@ if docker images --format "{{.Repository}}:{{.Tag}}" | grep -q "${IMAGE_NAME}:${
     echo "Docker image '${IMAGE_NAME}:${IMAGE_VERSION}' already exists. Skipping build."
 else
     echo "Docker image '${IMAGE_NAME}:${IMAGE_VERSION}' does not exist. Building now..."
-    docker build -t "${IMAGE_NAME}:${IMAGE_VERSION}" .
+    docker build -t "${IMAGE_NAME}:${IMAGE_VERSION}" -f ${DOCKERFILE_PATH}/Dockerfile .
     if [ $? -ne 0 ]; then
       echo "Failed to build Docker image '$FULL_IMAGE_NAME'. Check the Docker logs for more information."
       exit 1
