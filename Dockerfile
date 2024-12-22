@@ -16,6 +16,9 @@ RUN apk add --no-cache \
 COPY --from=builder /usr/lib/lib*.so* /usr/lib/
 COPY --from=builder /tmp/build/libevent/bin/lib/libevent*.so* /usr/lib/
 
+RUN adduser -D torpp
+USER torpp
+
 WORKDIR /app
 COPY --from=builder /tmp/build/torpp .
 
