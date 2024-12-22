@@ -43,8 +43,7 @@ static constexpr ConfigOptionMapping OptionMapping[] = {
       "TOR_CONTROL_PASSWORD",
       "--ControlPassword",
       "",
-      "Plain tor control password (will be hashed for internal usage)"
-     },
+      "Plain tor control password (will be hashed for internal usage)"},
     {Option::HashedControlPassword,
      "TOR_HASHED_CONTROL_PASSWORD",
      "--HashedControlPassword",
