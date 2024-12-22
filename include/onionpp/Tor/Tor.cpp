@@ -75,6 +75,9 @@ void onionpp::Tor::_start(Tor *i_Tor) {
     const auto it = std::ranges::find_if(OptionMapping,
                            [key](const ConfigOptionMapping& mapping) { return mapping.ConfigOption == key; });
     if (it != std::end(OptionMapping)) {
+      if (it->ConfigOption == Option::ControlPassword) {
+        continue;
+      }
       strArgs.emplace_back(it->ArgVar);
       strArgs.push_back(value);
     }
