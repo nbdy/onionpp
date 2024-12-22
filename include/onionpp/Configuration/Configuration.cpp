@@ -9,6 +9,7 @@
 #include "onionpp/Option/OptionMapping.h"
 
 #include <iostream>
+#include <onionpp/onionpp.h>
 
 void onionpp::Configuration::setDefaults() {
   for (const auto& mapping : OptionMapping) {
@@ -21,7 +22,7 @@ void onionpp::Configuration::setDefaults() {
 void onionpp::Configuration::parseEnvironment() {
   for (const auto& mapping: OptionMapping) {
     if (const char* value = std::getenv(mapping.EnvVar.data())) {
-      m_OptionMap[mapping.ConfigOption] = value;
+      setOption(mapping.ConfigOption, value);
     }
   }
 }
@@ -32,7 +33,7 @@ void onionpp::Configuration::parseArguments(const uint32_t argc, char** argv) {
     for (const auto& mapping : OptionMapping) {
       if (arg == mapping.ArgVar) {
         if (const auto valIdx = idx + 1; argc >= valIdx) {
-          m_OptionMap[mapping.ConfigOption] = std::string(argv[valIdx]);
+          setOption(mapping.ConfigOption, argv[valIdx]);
         } else {
           std::cout << "No value specified for '" << arg << "'!" << std::endl;
         }
@@ -72,7 +73,14 @@ std::string onionpp::Configuration::getOption(const Option& i_Option) const {
 }
 
 void onionpp::Configuration::setOption(const Option& i_Option, const std::string& i_Value) {
-  m_OptionMap[i_Option] = i_Value;
+  switch (i_Option) {
+    case Option::ControlPassword:
+      m_OptionMap[i_Option] = hashPassword(i_Value);
+      break;
+    default:
+      m_OptionMap[i_Option] = i_Value;
+      break;
+  }
 }
 
 std::string onionpp::Configuration::getSocks5Address() const {

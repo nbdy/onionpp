@@ -14,6 +14,7 @@ enum class Option {
   SOCKSPolicy,
   DataDirectory,
   ControlPort,
+  ControlPassword,
   HashedControlPassword,
   CookieAuthentication,
   HiddenServiceDir,
