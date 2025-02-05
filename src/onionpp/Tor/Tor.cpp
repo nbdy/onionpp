@@ -50,6 +50,10 @@ void onionpp::Tor::join() {
   if (m_Thread.joinable()) { m_Thread.join(); }
 }
 
+bool onionpp::Tor::isRunning() {
+  return m_Thread.joinable();
+}
+
 bool onionpp::Tor::isBootstrapped() {
   return control_get_bootstrap_percent() == 100;
 }
