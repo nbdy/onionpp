@@ -11,7 +11,7 @@
 #include <dlfcn.h>
 #endif
 
-#include "onionpp/Tor/ITor.h"
+#include "../include/onionpp/Tor/ITor.h"
 
 typedef onionpp::ITor* (*TorFactory)();
 
