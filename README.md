@@ -29,6 +29,15 @@ int main() {
 }
 ```
 
+```python
+from onionpp import Tor
+
+tor = Tor()
+tor.start(True)  # True to wait until tor has bootstrapped
+# else you can pass false and check via
+# tor.is_bootstrapped or tor.get_bootstrap_percentage
+```
+
 ## bindings
 
 | Bindings / OS | Linux | Windows |
