@@ -4,7 +4,7 @@
 
 #include <utility>
 
-#include "Configuration.h"
+#include "onionpp/Configuration/Configuration.h"
 
 #include "onionpp/Option/OptionMapping.h"
 

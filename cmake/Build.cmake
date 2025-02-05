@@ -2,8 +2,8 @@ include(cmake/AddTor.cmake)
 
 include_directories(include)
 file(GLOB_RECURSE ONIONPP_SOURCES
-        include/onionpp/*.cpp
-        include/onionpp/**/*.cpp
+        src/onionpp/*.cpp
+        src/onionpp/**/*.cpp
 )
 
 add_library(onionpp OBJECT ${ONIONPP_SOURCES})

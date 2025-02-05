@@ -2,10 +2,10 @@
 // Created by nbdy on 10.04.23.
 //
 
-#include "onionpp.h"
+#include "onionpp/onionpp.h"
 
-#include "Tor/ITor.h"
-#include "Tor/Tor.h"
+#include "onionpp/Tor/ITor.h"
+#include "onionpp/Tor/Tor.h"
 
 extern "C" {
 #ifdef _WIN32

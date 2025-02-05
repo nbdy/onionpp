@@ -7,7 +7,7 @@
 #include <chrono>
 #include <bits/ranges_util.h>
 
-#include "Tor.h"
+#include "onionpp/Tor/Tor.h"
 
 #include "onionpp/Option/OptionMapping.h"
 #include "onionpp/Configuration/Configuration.h"
