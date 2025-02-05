@@ -3,7 +3,7 @@ requires = ["scikit-build-core", "pybind11"]
 build-backend = "scikit_build_core.build"
 
 [project]
-name = "onionpy"
+name = "onionpp"
 version = "1.0.1"
 requires-python = ">=3.8"
 description = "Tor C++ bindings for python"
@@ -20,7 +20,7 @@ classifiers = [
 ]
 
 [tool.setuptools]
-packages = ["onionpy"]
+packages = ["onionpp"]
 
 [tool.setuptools.package-data]
 onionpy = ["py.typed"]
