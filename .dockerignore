@@ -2,3 +2,4 @@
 .github
 .venv
 cmake-build-*
+test
