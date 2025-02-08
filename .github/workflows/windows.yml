@@ -34,7 +34,7 @@ jobs:
 
       - name: Configure CMake
         working-directory: build
-        run: cmake .. -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain/windows.cmake -DPYTHON_BINDINGS=OFF -DSO_TEST=OFF -DTESTS=OFF
+        run: cmake .. -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain/windows.cmake -DSO_TEST=OFF -DTESTS=OFF
 
       - name: Build
         working-directory: build
