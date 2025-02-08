@@ -15,6 +15,7 @@ embed tor in your application
 
 ## usage
 
+### cpp
 ```c++
 #include "onionpp.h"
 
@@ -28,6 +29,8 @@ int main() {
   return 0;
 }
 ```
+
+### python
 
 ```python
 from onionpy import Tor
