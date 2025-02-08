@@ -14,7 +14,7 @@ SO_TEST = false
 PYTHON_BINDINGS = true
 
 [project]
-name = "onionpp"
+name = "onionpy"
 version = "1.0.2"
 requires-python = ">=3.8"
 description = "Tor C++ bindings for python"

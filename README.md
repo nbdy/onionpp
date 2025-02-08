@@ -30,7 +30,7 @@ int main() {
 ```
 
 ```python
-from onionpp import Tor
+from onionpy import Tor
 
 tor = Tor()
 tor.start(True)  # True to wait until tor has bootstrapped
