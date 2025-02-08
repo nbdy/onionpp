@@ -1,0 +1,5 @@
+add_executable(torpp main.cpp)
+add_dependencies(torpp onionpp-static)
+set_target_properties(torpp PROPERTIES LINK_FLAGS_RELEASE -s)
+target_include_directories(torpp PRIVATE ${CLI11_SOURCE_DIR}/include)
+target_link_libraries(torpp PRIVATE onionpp-static)

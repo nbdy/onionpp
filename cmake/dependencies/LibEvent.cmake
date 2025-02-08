@@ -1,6 +1,6 @@
 include(ExternalProject)
 
-include(cmake/AddOpenSSL.cmake)
+include(cmake/dependencies/OpenSSL.cmake)
 
 set(LIBEVENT_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/libevent/bin)
 

@@ -1,6 +1,6 @@
 include(ExternalProject)
 
-include(cmake/AddZLib.cmake)
+include(cmake/dependencies/ZLib.cmake)
 
 set(OPENSSL_CONFIGURE_PREFIX "")
 if(OPENSSL_CONFIGURE_PREFIX STREQUAL "")

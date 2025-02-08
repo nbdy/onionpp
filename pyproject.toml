@@ -2,9 +2,20 @@
 requires = ["scikit-build-core", "pybind11"]
 build-backend = "scikit_build_core.build"
 
+[tool.scikit-build]
+cmake.verbose = true
+logging.level = "INFO"
+wheel.packages = []
+
+[tool.scikit-build.cmake.define]
+TORPP = false
+TESTS = false
+SO_TEST = false
+PYTHON_BINDINGS = true
+
 [project]
 name = "onionpp"
-version = "1.0.1"
+version = "1.0.2"
 requires-python = ">=3.8"
 description = "Tor C++ bindings for python"
 authors = [{ name = "Pascal Eberlein", email = "pascal@eberlein.io" }]
@@ -18,9 +29,3 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent"
 ]
-
-[tool.setuptools]
-packages = ["onionpp"]
-
-[tool.setuptools.package-data]
-onionpy = ["py.typed"]

@@ -1,6 +1,6 @@
 include(ExternalProject)
 
-include(cmake/AddLibEvent.cmake)
+include(cmake/dependencies/LibEvent.cmake)
 
 set(TOR_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/tor/bin/)
 

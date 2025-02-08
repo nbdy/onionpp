@@ -1,4 +1,4 @@
-from onionpy import Tor
+from onionpp import Tor
 
 def main():
     tor = Tor()

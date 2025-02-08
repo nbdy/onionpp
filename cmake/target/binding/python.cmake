@@ -1,0 +1,8 @@
+set(PYBIND11_NEWPYTHON ON)
+find_package(Python)
+include(cmake/dependencies/PyBind11.cmake)
+pybind11_add_module(onionpp-python bindings/python.cpp)
+target_include_directories(onionpp-python PUBLIC ${ONIONPP_INSTALL_DIR}/include)
+add_dependencies(onionpp-python onionpp-static)
+target_link_libraries(onionpp-python PRIVATE onionpp-static pybind11::pybind11)
+install(TARGETS onionpp-python LIBRARY DESTINATION . RENAME onionpp.so)
